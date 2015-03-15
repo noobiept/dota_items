@@ -820,6 +820,7 @@ var Game;
         var Button = (function (_super) {
             __extends(Button, _super);
             function Button(args) {
+                var _this = this;
                 if (typeof this.click_ref === 'undefined') {
                     this.click_ref = function () {
                         args.callback(_this);
@@ -828,11 +829,7 @@ var Game;
                 // set properties before this
                 _super.call(this, args);
                 // .container only available after super()
-                var _this = this;
-                this.element = document.createElement('span');
-                this.element.innerHTML = args.text;
                 this.container.classList.add('Game-Button');
-                this.container.appendChild(this.element);
                 this.addEvents();
             }
             Button.prototype.addEvents = function () {
@@ -842,11 +839,12 @@ var Game;
                 this.container.removeEventListener('click', this.click_ref);
             };
             Button.prototype.clear = function () {
+                _super.prototype.clear.call(this);
                 this.removeEvents();
                 this.click_ref = null;
             };
             return Button;
-        })(HtmlElement);
+        })(Value);
         Html.Button = Button;
         var Boolean = (function (_super) {
             __extends(Boolean, _super);
@@ -897,17 +895,17 @@ var Game;
             __extends(TwoState, _super);
             function TwoState(args) {
                 var _this = this;
-                this.isText1 = true;
+                this.isValue1 = true;
                 this.click_ref = function () {
-                    if (_this.isText1) {
-                        _this.element.innerHTML = args.text2;
+                    if (_this.isValue1) {
+                        _this.element.innerHTML = args.value2;
                         args.callback(_this);
                     }
                     else {
-                        _this.element.innerHTML = args.text;
+                        _this.element.innerHTML = args.value;
                         args.callback2(_this);
                     }
-                    _this.isText1 = !_this.isText1;
+                    _this.isValue1 = !_this.isValue1;
                 };
                 // set properties before this
                 _super.call(this, args);
@@ -1676,6 +1674,16 @@ var Game;
 /// <reference path="element.ts" />
 var Game;
 (function (Game) {
+    /**
+     * Basic Usage:
+     *
+     *     var text = new Game.Text({
+     *             x: 10,
+     *             y: 20,
+     *             text: 'Hi'
+     *         });
+     *     Game.addElement( text );
+     */
     var Text = (function (_super) {
         __extends(Text, _super);
         function Text(args) {
