@@ -20,6 +20,7 @@ preload.addEventListener( 'complete', function()
     {
     loadingMessage.clear();
 
+    Main.init();
     Main.start();
     });
 preload.load( 'items', 'images/_combined_items.jpg' );
@@ -37,8 +38,11 @@ var ITEM_IMAGE;
 var ITEM_NAME;
 var BUTTONS = [];
 var CURRENT_ITEM;
+var POSITIONS_LEFT = [];
+var TIMER;
 
-Main.start = function()
+
+Main.init = function()
 {
 var canvas = Game.getCanvas();
 var halfWidth = canvas.getWidth() / 2;
@@ -60,7 +64,7 @@ ITEM_NAME = new Game.Text({
 canvas.addElement( ITEM_IMAGE, ITEM_NAME );
 
 
-var menu = new Game.Html.HtmlContainer();
+var costMenu = new Game.Html.HtmlContainer();
 var price1 = new Game.Html.Button({
         value: 0,
         callback: clicked
@@ -73,14 +77,53 @@ var price3 = new Game.Html.Button({
         value: 0,
         callback: clicked
     });
-menu.addChild( price1, price2, price3 );
+costMenu.addChild( price1, price2, price3 );
 
-Game.getCanvasContainer().appendChild( menu.container );
+
+var gameMenu = new Game.Html.HtmlContainer();
+var timer = new Game.Html.Value({ value: 0 });
+var restart = new Game.Html.Button({
+        value: 'Restart',
+        callback: Main.restart
+    });
+gameMenu.addChild( restart, timer );
+
+
+var canvasContainer = Game.getCanvasContainer();
+
+canvasContainer.appendChild( costMenu.container );
+canvasContainer.appendChild( gameMenu.container );
+
+TIMER = new Utilities.Timer( timer.container );
 
 BUTTONS = [ price1, price2, price3 ];
+};
 
 
+
+Main.start = function()
+{
+for (var a = ITEMS.length - 1 ; a >= 0 ; a--)
+    {
+    POSITIONS_LEFT.push( a );
+    }
+
+TIMER.start();
 newItem();
+};
+
+
+Main.clear = function()
+{
+TIMER.reset();
+POSITIONS_LEFT.length = 0;
+};
+
+
+Main.restart = function()
+{
+Main.clear();
+Main.start();
 };
 
 
@@ -92,7 +135,19 @@ var value = button.getValue();
 if ( value === CURRENT_ITEM.cost )
     {
     console.log( 'Correct!' );
-    newItem();
+
+    if ( POSITIONS_LEFT.length > 0 )
+        {
+        newItem();
+        }
+
+    else
+        {
+        var time = TIMER.getTimeSeconds();
+
+        console.log( 'Victory! ' + TIMER.getTimeString() );
+        Main.restart();
+        }
     }
 
 else
@@ -106,12 +161,19 @@ else
 
 function newItem()
 {
-var position = Utilities.getRandomInt( 0, ITEMS.length - 1 );
-var item = ITEMS[ position ];
+var index = Utilities.getRandomInt( 0, POSITIONS_LEFT.length - 1 );
+var randomPosition = POSITIONS_LEFT.splice( index, 1 )[ 0 ];
+
+var item = ITEMS[ randomPosition ];
 
 var cost = item.cost;
 var lower = cost - Utilities.getRandomInt( 1, 20 ) * 5;
 var higher = cost + Utilities.getRandomInt( 1, 20 ) * 5;
+
+if ( lower < 0 )
+    {
+    lower = 0;
+    }
 
 var values = shuffle([ cost, lower, higher ]);
 
