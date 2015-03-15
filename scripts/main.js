@@ -40,6 +40,7 @@ var BUTTONS = [];
 var CURRENT_ITEM;
 var POSITIONS_LEFT = [];
 var TIMER;
+var HIGHSCORE_ELEMENT;
 
 
 Main.init = function()
@@ -86,7 +87,9 @@ var restart = new Game.Html.Button({
         value: 'Restart',
         callback: Main.restart
     });
-gameMenu.addChild( restart, timer );
+var highscore = new Game.Html.Value({ value: '', preText: 'Best time: ' });
+
+gameMenu.addChild( restart, timer, highscore );
 
 
 var canvasContainer = Game.getCanvasContainer();
@@ -95,8 +98,12 @@ canvasContainer.appendChild( costMenu.container );
 canvasContainer.appendChild( gameMenu.container );
 
 TIMER = new Utilities.Timer( timer.container );
-
 BUTTONS = [ price1, price2, price3 ];
+HIGHSCORE_ELEMENT = highscore;
+
+Game.HighScore.init( 1, 'dota_items_highscore', true );
+
+updateHighScore();
 };
 
 
@@ -143,7 +150,9 @@ if ( value === CURRENT_ITEM.cost )
 
     else
         {
-        var time = TIMER.getTimeSeconds();
+        Game.HighScore.add( 'time', TIMER.getTimeMilliseconds() );
+
+        updateHighScore();
 
         console.log( 'Victory! ' + TIMER.getTimeString() );
         Main.restart();
@@ -156,6 +165,26 @@ else
     }
 }
 
+
+
+function updateHighScore()
+{
+var bestTime = Game.HighScore.get( 'time' );
+var str;
+
+if ( bestTime )
+    {
+    str = Utilities.timeToString( bestTime[ 0 ] );
+    }
+
+else
+    {
+    str = '---';
+    }
+
+
+HIGHSCORE_ELEMENT.setValue( str );
+}
 
 
 
