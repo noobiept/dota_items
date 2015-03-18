@@ -1,29 +1,7 @@
 window.onload = function()
 {
-Game.init( document.body, 400, 400 );
-
-
-var canvasContainer = Game.getCanvasContainer();
-var loadingMessage = new Game.Message({
-        text: 'Loading..'
-    });
-canvasContainer.appendChild( loadingMessage.container );
-
-
-var preload = new Game.Preload({ save_global: true });
-
-preload.addEventListener( 'progress', function( progress )
-    {
-    loadingMessage.setText( 'Loading.. ' + progress + '%' );
-    });
-preload.addEventListener( 'complete', function()
-    {
-    loadingMessage.clear();
-
-    Main.init();
-    Main.start();
-    });
-preload.load( 'items', 'images/_combined_items.jpg' );
+Main.init();
+Main.start();
 };
 
 
@@ -34,35 +12,20 @@ function Main()
 
 }
 
-var ITEM_IMAGE;
-var ITEM_NAME;
 var BUTTONS = [];
 var CURRENT_ITEM;
 var POSITIONS_LEFT = [];
 var TIMER;
 var HIGHSCORE_ELEMENT;
 
+var HTML_IMAGE;
+var HTML_NAME;
+
 
 Main.init = function()
 {
-var canvas = Game.getCanvas();
-var halfWidth = canvas.getWidth() / 2;
-
-ITEM_IMAGE = new Game.Sprite({
-        x: halfWidth,
-        y: 50,
-        image: Game.Preload.get( 'items' ),
-        frameWidth: 85,
-        frameHeight: 64
-    });
-
-ITEM_NAME = new Game.Text({
-        x: halfWidth,
-        y: 100,
-        textAlign: 'center'
-    });
-
-canvas.addElement( ITEM_IMAGE, ITEM_NAME );
+HTML_IMAGE = document.querySelector( '#ItemImage' );
+HTML_NAME = document.querySelector( '#ItemName' );
 
 
 var costMenu = new Game.Html.HtmlContainer();
@@ -81,7 +44,7 @@ var price3 = new Game.Html.Button({
 costMenu.addChild( price1, price2, price3 );
 
 
-var gameMenu = new Game.Html.HtmlContainer();
+var controlsMenu = new Game.Html.HtmlContainer();
 var timer = new Game.Html.Value({ value: 0 });
 var restart = new Game.Html.Button({
         value: 'Restart',
@@ -89,13 +52,17 @@ var restart = new Game.Html.Button({
     });
 var highscore = new Game.Html.Value({ value: '', preText: 'Best time: ' });
 
-gameMenu.addChild( restart, timer, highscore );
+controlsMenu.addChild( restart, timer, highscore );
 
+var gameMenu = new Game.Html.HtmlContainer({
+        cssId: 'GameMenu'
+    });
 
-var canvasContainer = Game.getCanvasContainer();
+gameMenu.container.appendChild( costMenu.container );
+gameMenu.container.appendChild( controlsMenu.container );
 
-canvasContainer.appendChild( costMenu.container );
-canvasContainer.appendChild( gameMenu.container );
+document.body.appendChild( gameMenu.container );
+
 
 TIMER = new Utilities.Timer( timer.container );
 BUTTONS = [ price1, price2, price3 ];
@@ -195,20 +162,21 @@ var randomPosition = POSITIONS_LEFT.splice( index, 1 )[ 0 ];
 
 var item = ITEMS[ randomPosition ];
 
-var cost = item.cost;
-var lower = cost - Utilities.getRandomInt( 1, 20 ) * 5;
-var higher = cost + Utilities.getRandomInt( 1, 20 ) * 5;
+var rightCost = item.cost;
+var cost2 = rightCost + Utilities.getRandomInt( -20, 20 ) * 5;
+var cost3 = rightCost + Utilities.getRandomInt( -20, 20 ) * 5;
 
-if ( lower < 0 )
+if ( cost2 < 0 )
     {
-    lower = 0;
+    cost2 = 0;
     }
 
-var values = shuffle([ cost, lower, higher ]);
+var values = shuffle([ rightCost, cost2, cost3 ]);
 
 
-ITEM_IMAGE.setFrame( item.position );
-ITEM_NAME.text = item.id;
+HTML_IMAGE.src = item.url;
+HTML_NAME.innerHTML = item.id;
+
 
 for (var a = BUTTONS.length - 1 ; a >= 0 ; a--)
     {
