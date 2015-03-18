@@ -5,7 +5,8 @@ body
     margin: 0;
     text-align: center;
     background-color: black;
-    color: white;
+    color: #CCC;
+    font-family: helvetica, arial sans-serif;
     }
 
 #Game-canvasContainer
@@ -81,4 +82,52 @@ body
     display: inline-block;
     padding: 2px 5px;
     margin: 0 5px;
+    }
+
+
+
+/* ----------- */
+
+#GameContainer
+    {
+    background: url('http://cdn.dota2.com/apps/dota2/images/quiz/keeper.png') top no-repeat;
+    width: 664px;
+    height: 362px;
+    margin: auto;
+    }
+
+#ItemContainer
+    {
+    padding-top: 25px;
+    }
+
+#ItemContainer p
+    {
+    margin-top: 0;
+    }
+
+#CostMenu > *, #InfoMenu > *
+    {
+    display: inline-block;
+    margin: 2px 10px;
+    }
+
+#InfoMenu
+    {
+    padding-top: 40px;
+    }
+
+#ControlsMenu
+    {
+    padding-top: 40px;
+    }
+
+.red
+    {
+    color: red;
+    }
+
+.yellow
+    {
+    color: yellow;
     }

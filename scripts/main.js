@@ -16,7 +16,11 @@ var BUTTONS = [];
 var CURRENT_ITEM;
 var POSITIONS_LEFT = [];
 var TIMER;
+var GUESSES_LEFT;
+
 var HIGHSCORE_ELEMENT;
+var GUESSES_LEFT_ELEMENT;
+var ITEMS_LEFT_ELEMENT;
 
 var HTML_IMAGE;
 var HTML_NAME;
@@ -28,7 +32,7 @@ HTML_IMAGE = document.querySelector( '#ItemImage' );
 HTML_NAME = document.querySelector( '#ItemName' );
 
 
-var costMenu = new Game.Html.HtmlContainer();
+var costMenu = new Game.Html.HtmlContainer({ cssId: 'CostMenu' });
 var price1 = new Game.Html.Button({
         value: 0,
         callback: clicked
@@ -44,29 +48,44 @@ var price3 = new Game.Html.Button({
 costMenu.addChild( price1, price2, price3 );
 
 
-var controlsMenu = new Game.Html.HtmlContainer();
+var infoMenu = new Game.Html.HtmlContainer({ cssId: 'InfoMenu' });
+
+var guessesLeft = new Game.Html.Value({ value: 0, preText: 'Guesses left: ' });
+var itemsLeft = new Game.Html.Value({ value: 0, preText: 'Items left: ' });
 var timer = new Game.Html.Value({ value: 0 });
+
+infoMenu.addChild( guessesLeft, itemsLeft, timer );
+
+
+var controlsMenu = new Game.Html.HtmlContainer({ cssId: 'ControlsMenu' });
+
 var restart = new Game.Html.Button({
         value: 'Restart',
         callback: Main.restart
     });
 var highscore = new Game.Html.Value({ value: '', preText: 'Best time: ' });
 
-controlsMenu.addChild( restart, timer, highscore );
+controlsMenu.addChild( restart, highscore );
 
 var gameMenu = new Game.Html.HtmlContainer({
         cssId: 'GameMenu'
     });
 
 gameMenu.container.appendChild( costMenu.container );
+gameMenu.container.appendChild( infoMenu.container );
 gameMenu.container.appendChild( controlsMenu.container );
 
-document.body.appendChild( gameMenu.container );
+
+var container = document.querySelector( '#GameContainer' );
+
+container.appendChild( gameMenu.container );
 
 
 TIMER = new Utilities.Timer( timer.container );
 BUTTONS = [ price1, price2, price3 ];
 HIGHSCORE_ELEMENT = highscore;
+GUESSES_LEFT_ELEMENT = guessesLeft;
+ITEMS_LEFT_ELEMENT = itemsLeft;
 
 Game.HighScore.init( 1, 'dota_items_highscore', true );
 
@@ -81,6 +100,10 @@ for (var a = ITEMS.length - 1 ; a >= 0 ; a--)
     {
     POSITIONS_LEFT.push( a );
     }
+
+updateGuessesleft( 3 );
+
+ITEMS_LEFT_ELEMENT.setValue( POSITIONS_LEFT.length );
 
 TIMER.start();
 newItem();
@@ -128,7 +151,33 @@ if ( value === CURRENT_ITEM.cost )
 
 else
     {
+    updateGuessesleft( GUESSES_LEFT - 1 );
+
     console.log( 'Incorrect!' );
+    }
+}
+
+
+function updateGuessesleft( guesses )
+{
+GUESSES_LEFT = guesses;
+GUESSES_LEFT_ELEMENT.setValue( guesses );
+
+var htmlElement = GUESSES_LEFT_ELEMENT.element;
+
+if ( guesses <= 1 )
+    {
+    htmlElement.className = 'red';
+    }
+
+else if ( guesses <= 2 )
+    {
+    htmlElement.className = 'yellow';
+    }
+
+else
+    {
+    htmlElement.className = '';
     }
 }
 
@@ -184,6 +233,8 @@ for (var a = BUTTONS.length - 1 ; a >= 0 ; a--)
     }
 
 CURRENT_ITEM = item;
+
+ITEMS_LEFT_ELEMENT.setValue( POSITIONS_LEFT.length );
 }
 
 
