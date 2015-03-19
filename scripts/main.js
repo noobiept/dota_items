@@ -33,6 +33,7 @@ HTML_CONTAINER = document.querySelector( '#GameContainer' );
 HTML_IMAGE = HTML_CONTAINER.querySelector( '#ItemImage' );
 HTML_NAME = HTML_CONTAINER.querySelector( '#ItemName' );
 
+Message.init();
 
 var costMenu = new Game.Html.HtmlContainer({ cssId: 'CostMenu' });
 var price1 = new Game.Html.Button({
@@ -132,7 +133,7 @@ var message, ok;
 
 if ( value === CURRENT_ITEM.cost )
     {
-    console.log( 'Correct!' );
+    Message.correct();
 
     if ( POSITIONS_LEFT.length > 0 )
         {
@@ -168,7 +169,7 @@ else
     {
     updateGuessesleft( GUESSES_LEFT - 1 );
 
-    console.log( 'Incorrect!' );
+    Message.incorrect();
 
     if ( GUESSES_LEFT <= 0 )
         {

@@ -102,11 +102,13 @@ body
 #ItemContainer
     {
     padding-top: 25px;
+    padding-bottom: 15px;
     }
 
-#ItemContainer p
+#ItemImage
     {
-    margin-top: 0;
+    width: 85px;
+    height: 64px;
     }
 
 #CostMenu > *, #InfoMenu > *
@@ -131,12 +133,12 @@ body
     color: #978989;
     }
 
-#InfoMenu .Game-Value span:last-child.red
+#InfoMenu .Game-Value span:last-child.red, .red
     {
     color: red;
     }
 
-#InfoMenu .Game-Value span:last-child.yellow
+#InfoMenu .Game-Value span:last-child.yellow, .yellow   /* //HERE */
     {
     color: yellow;
     }
@@ -144,4 +146,13 @@ body
 .Game-Button:hover
     {
     color: #8F3C2E;
+    }
+
+
+#Message
+    {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     }
