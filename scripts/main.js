@@ -22,14 +22,16 @@ var HIGHSCORE_ELEMENT;
 var GUESSES_LEFT_ELEMENT;
 var ITEMS_LEFT_ELEMENT;
 
+var HTML_CONTAINER;
 var HTML_IMAGE;
 var HTML_NAME;
 
 
 Main.init = function()
 {
-HTML_IMAGE = document.querySelector( '#ItemImage' );
-HTML_NAME = document.querySelector( '#ItemName' );
+HTML_CONTAINER = document.querySelector( '#GameContainer' );
+HTML_IMAGE = HTML_CONTAINER.querySelector( '#ItemImage' );
+HTML_NAME = HTML_CONTAINER.querySelector( '#ItemName' );
 
 
 var costMenu = new Game.Html.HtmlContainer({ cssId: 'CostMenu' });
@@ -76,9 +78,7 @@ gameMenu.container.appendChild( infoMenu.container );
 gameMenu.container.appendChild( controlsMenu.container );
 
 
-var container = document.querySelector( '#GameContainer' );
-
-container.appendChild( gameMenu.container );
+HTML_CONTAINER.appendChild( gameMenu.container );
 
 
 TIMER = new Utilities.Timer( timer.container );
@@ -128,6 +128,7 @@ Main.start();
 function clicked( button )
 {
 var value = button.getValue();
+var message, ok;
 
 if ( value === CURRENT_ITEM.cost )
     {
@@ -140,12 +141,26 @@ if ( value === CURRENT_ITEM.cost )
 
     else
         {
+        TIMER.stop();
+
         Game.HighScore.add( 'time', TIMER.getTimeMilliseconds() );
 
         updateHighScore();
 
-        console.log( 'Victory! ' + TIMER.getTimeString() );
-        Main.restart();
+        ok = new Game.Html.Button({
+                value: 'Ok',
+                callback: function( button )
+                    {
+                    message.clear();
+                    Main.restart();
+                    }
+            });
+
+        message = new Game.Message({
+                text: 'Victory! ' + TIMER.getTimeString(),
+                buttons: ok
+            });
+        HTML_CONTAINER.appendChild( message.container );
         }
     }
 
@@ -154,6 +169,26 @@ else
     updateGuessesleft( GUESSES_LEFT - 1 );
 
     console.log( 'Incorrect!' );
+
+    if ( GUESSES_LEFT <= 0 )
+        {
+        TIMER.stop();
+
+        ok = new Game.Html.Button({
+                value: 'Ok',
+                callback: function( button )
+                    {
+                    message.clear();
+                    Main.restart();
+                    }
+            });
+
+        message = new Game.Message({
+                text: 'Defeat!',
+                buttons: ok
+            });
+        HTML_CONTAINER.appendChild( message.container );
+        }
     }
 }
 

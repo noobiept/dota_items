@@ -32,7 +32,6 @@ body
 .Game-Button, .Game-Boolean, .Game-MultipleOptions
     {
     cursor: pointer;
-    color: green;
     }
 
 .Game-MultipleOptions span
@@ -61,20 +60,23 @@ body
     top: 50%;
     transform: translate(-50%, -50%);
     padding: 10px;
-    background-color: aliceblue;
-    color: black;
+    background-color: #2a2d30;
+    border: 8px solid;
+    border-image: url('http://cdn.dota2.com/apps/dota2/images/quiz/border.png') 15 15 round;
+    min-width: 200px;
+    color: #bcbcbc;
     }
 
 .Game-Message-container .Game-Button
     {
-    background-color: cornflowerblue;
-    color: aliceblue;
+    background-color: #444;
+    border: 1px solid #555;
     }
 
 .Game-Message-Components
     {
     margin-top: 10px;
-    text-align: right;
+    text-align: center;
     }
 
 .Game-Message-Components > *
@@ -94,6 +96,7 @@ body
     width: 664px;
     height: 362px;
     margin: auto;
+    position: relative;
     }
 
 #ItemContainer
@@ -122,12 +125,23 @@ body
     padding-top: 40px;
     }
 
-.red
+#InfoMenu .Game-Value span:last-child
+    {
+    font-weight: bold;
+    color: #978989;
+    }
+
+#InfoMenu .Game-Value span:last-child.red
     {
     color: red;
     }
 
-.yellow
+#InfoMenu .Game-Value span:last-child.yellow
     {
     color: yellow;
+    }
+
+.Game-Button:hover
+    {
+    color: #8F3C2E;
     }
