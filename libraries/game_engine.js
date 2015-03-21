@@ -1118,6 +1118,8 @@ var Game;
             this.setText(args.text);
             this.container.appendChild(this.text);
             this.container.classList.add('Game-Message-container');
+            this.timeout = null;
+            this.background = null;
             if (typeof args.buttons !== 'undefined') {
                 var buttons;
                 if (args.buttons instanceof Array) {
@@ -1135,7 +1137,6 @@ var Game;
                 }
                 this.addChild(buttonsContainer);
             }
-            this.timeout = null;
             if (Utilities.isNumber(args.timeout)) {
                 this.timeout = new Utilities.Timeout();
                 var _this = this;
@@ -1143,11 +1144,20 @@ var Game;
                     _this.clear();
                 }, args.timeout * 1000);
             }
+            if (args.background === true) {
+                this.background = document.createElement('div');
+                this.background.className = 'Game-Message-background';
+                args.container.appendChild(this.background);
+            }
+            args.container.appendChild(this.container);
         }
         Message.prototype.clear = function () {
             if (this.timeout) {
                 this.timeout.clear();
                 this.timeout = null;
+            }
+            if (this.background) {
+                this.container.parentNode.removeChild(this.background);
             }
             _super.prototype.clear.call(this);
         };
@@ -1909,9 +1919,19 @@ var Game;
     
             @param id - the id to be used later on to get the element
             @param path - path to the file
+            @param typeId - type of the file to load. If not provided then it will try to determine the type from the file extension.
          */
-        Preload.prototype.load = function (id, path) {
-            var type = Game.Preload.getType(path);
+        Preload.prototype.load = function (id, path, typeId) {
+            var type;
+            if (typeof type === 'undefined') {
+                type = Game.Preload.getType(path);
+            }
+            else {
+                type = Game.Preload.TYPES[typeId];
+            }
+            if (!type) {
+                throw new Error('Invalid file type.');
+            }
             var _this = this;
             this._total_items++;
             var request = new XMLHttpRequest();
@@ -1983,12 +2003,22 @@ var Game;
     Game.Preload = Preload;
     var Preload;
     (function (Preload) {
+        // supported file types
+        (function (TYPES) {
+            TYPES[TYPES["image"] = 0] = "image";
+            TYPES[TYPES["json"] = 1] = "json";
+            TYPES[TYPES["text"] = 2] = "text";
+            TYPES[TYPES["audio"] = 3] = "audio";
+        })(Preload.TYPES || (Preload.TYPES = {}));
+        var TYPES = Preload.TYPES;
+        // file extensions of each type
         Preload.EXTENSIONS = {
             image: ['png', 'jpg', 'jpeg'],
             json: ['json'],
             text: ['txt'],
             audio: ['ogg', 'mp3']
         };
+        // XMLHttpRequest response type of each file type
         Preload.RESPONSE_TYPE = {
             image: 'blob',
             json: 'json',
@@ -2116,18 +2146,24 @@ var Game;
         var timeHidden = new Date().getTime();
         document.addEventListener('visibilitychange', function (event) {
             if (document.hidden) {
-                timeHidden = new Date().getTime();
-                window.cancelAnimationFrame(ANIMATION_ID);
+                stopGameLoop();
             }
             else {
-                TIME += new Date().getTime() - timeHidden;
-                loop();
+                startGameLoop();
             }
         });
+        startGameLoop();
+    }
+    Game.init = init;
+    function startGameLoop() {
         TIME = new Date().getTime();
         loop();
     }
-    Game.init = init;
+    Game.startGameLoop = startGameLoop;
+    function stopGameLoop() {
+        window.cancelAnimationFrame(ANIMATION_ID);
+    }
+    Game.stopGameLoop = stopGameLoop;
     /**
         @param id - Id of the canvas, returns the first one (id 0) by default.
      */

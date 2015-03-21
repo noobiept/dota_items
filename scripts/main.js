@@ -186,9 +186,10 @@ else
 
         message = new Game.Message({
                 text: 'Defeat!',
+                container: HTML_CONTAINER,
+                background: true,
                 buttons: ok
             });
-        HTML_CONTAINER.appendChild( message.container );
         }
     }
 }
@@ -239,6 +240,46 @@ HIGHSCORE_ELEMENT.setValue( str );
 }
 
 
+/*
+    Get a random value around the reference cost, and try not to get a repeated value.
+ */
+function getRandomCost( referenceCost, excludeValues )
+{
+if ( typeof excludeValues === 'undefined' )
+    {
+    excludeValues = [];
+    }
+
+excludeValues.push( referenceCost );
+
+var tries = 5;
+var random;
+
+for (var a = 0 ; a < tries ; a++)
+    {
+    random = referenceCost + Utilities.getRandomInt( -20, 20 ) * 5;
+
+        // see if we already have this value, if so then try again
+        // otherwise we got what we came here for
+    if ( random >= 0 && excludeValues.indexOf( random ) < 0 )
+        {
+        return random;
+        }
+    }
+
+
+    // don't allow negative numbers
+if ( random < 0 )
+    {
+    random = 0;
+    }
+
+
+    // no more tries left, just return the last value
+return random;
+}
+
+
 
 function newItem()
 {
@@ -248,13 +289,9 @@ var randomPosition = POSITIONS_LEFT.splice( index, 1 )[ 0 ];
 var item = ITEMS[ randomPosition ];
 
 var rightCost = item.cost;
-var cost2 = rightCost + Utilities.getRandomInt( -20, 20 ) * 5;
-var cost3 = rightCost + Utilities.getRandomInt( -20, 20 ) * 5;
+var cost2 = getRandomCost( rightCost );
+var cost3 = getRandomCost( rightCost, [ cost2 ] );
 
-if ( cost2 < 0 )
-    {
-    cost2 = 0;
-    }
 
 var values = shuffle([ rightCost, cost2, cost3 ]);
 
