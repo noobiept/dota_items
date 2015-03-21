@@ -9,49 +9,86 @@ body
     font-family: helvetica, arial sans-serif;
     }
 
-#Game-canvasContainer
-    {
-    position: relative;
-    }
 
-#Game-canvasContainer canvas:first-child
-    {
-    background-color: white;
-    }
+    /* ---- Generic classes ---- */
 
-.Game-Canvas:not(:first-child)
-    {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    }
-
-    /* ---- Menu ---- */
-
-.Game-Button, .Game-Boolean, .Game-MultipleOptions
-    {
-    cursor: pointer;
-    }
-
-.Game-MultipleOptions span
-    {
-    margin: 5px;
-    }
-
-.Game-selected
+#InfoMenu .Game-Value span:last-child.red, .red
     {
     color: red;
     }
 
-.Game-inactive
+#InfoMenu .Game-Value span:last-child.yellow, .yellow
     {
-    cursor: default;
-    color: gray;
+    color: yellow;
     }
 
 
-    /* ---- Message ---- */
+    /* ---- Game Container ---- */
+
+#GameContainer
+    {
+    background: url('http://cdn.dota2.com/apps/dota2/images/quiz/keeper.png') top no-repeat;
+    width: 664px;
+    height: 362px;
+    margin: auto;
+    position: relative;
+    }
+
+
+    /* ---- Item ---- */
+
+#ItemContainer
+    {
+    padding-top: 25px;
+    padding-bottom: 15px;
+    }
+
+#ItemImage
+    {
+    width: 85px;
+    height: 64px;
+    }
+
+
+    /* ---- Menu ---- */
+
+.Game-Button
+    {
+    display: inline-block;
+    cursor: pointer;
+    color: #8F3C2E;
+    margin: 2px 5px;
+    }
+
+.Game-Button:hover
+    {
+    text-decoration: underline;
+    }
+
+#CostMenu > *, #InfoMenu > *
+    {
+    display: inline-block;
+    margin: 2px 10px;
+    }
+
+#InfoMenu
+    {
+    padding-top: 40px;
+    }
+
+#ControlsMenu
+    {
+    padding-top: 40px;
+    }
+
+#InfoMenu .Game-Value span:last-child
+    {
+    font-weight: bold;
+    color: #978989;
+    }
+
+
+    /* ---- Message/Dialog ---- */
 
 .Game-Message-container
     {
@@ -71,6 +108,14 @@ body
     {
     background-color: #444;
     border: 1px solid #555;
+    color: #bcbcbc;
+    padding: 5px 20px;
+    }
+
+.Game-Message-container .Game-Button:hover
+    {
+    background-color: #555;
+    text-decoration: none;
     }
 
 .Game-Message-Components
@@ -97,66 +142,7 @@ body
     }
 
 
-/* ----------- */
-
-#GameContainer
-    {
-    background: url('http://cdn.dota2.com/apps/dota2/images/quiz/keeper.png') top no-repeat;
-    width: 664px;
-    height: 362px;
-    margin: auto;
-    position: relative;
-    }
-
-#ItemContainer
-    {
-    padding-top: 25px;
-    padding-bottom: 15px;
-    }
-
-#ItemImage
-    {
-    width: 85px;
-    height: 64px;
-    }
-
-#CostMenu > *, #InfoMenu > *
-    {
-    display: inline-block;
-    margin: 2px 10px;
-    }
-
-#InfoMenu
-    {
-    padding-top: 40px;
-    }
-
-#ControlsMenu
-    {
-    padding-top: 40px;
-    }
-
-#InfoMenu .Game-Value span:last-child
-    {
-    font-weight: bold;
-    color: #978989;
-    }
-
-#InfoMenu .Game-Value span:last-child.red, .red
-    {
-    color: red;
-    }
-
-#InfoMenu .Game-Value span:last-child.yellow, .yellow   /* //HERE */
-    {
-    color: yellow;
-    }
-
-.Game-Button:hover
-    {
-    color: #8F3C2E;
-    }
-
+/* ----- Message ----- */
 
 #Message
     {
