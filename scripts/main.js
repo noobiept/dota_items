@@ -17,6 +17,7 @@ var CURRENT_ITEM;
 var POSITIONS_LEFT = [];
 var TIMER;
 var GUESSES_LEFT;
+var MAX_GUESSES = 5;
 
 var HIGHSCORE_ELEMENT;
 var GUESSES_LEFT_ELEMENT;
@@ -102,9 +103,7 @@ for (var a = ITEMS.length - 1 ; a >= 0 ; a--)
     POSITIONS_LEFT.push( a );
     }
 
-updateGuessesleft( 3 );
-
-ITEMS_LEFT_ELEMENT.setValue( POSITIONS_LEFT.length );
+updateGuessesleft( MAX_GUESSES );
 
 TIMER.start();
 newItem();
@@ -159,9 +158,9 @@ if ( value === CURRENT_ITEM.cost )
 
         message = new Game.Message({
                 text: 'Victory! ' + TIMER.getTimeString(),
+                container: HTML_CONTAINER,
                 buttons: ok
             });
-        HTML_CONTAINER.appendChild( message.container );
         }
     }
 
@@ -307,7 +306,8 @@ for (var a = BUTTONS.length - 1 ; a >= 0 ; a--)
 
 CURRENT_ITEM = item;
 
-ITEMS_LEFT_ELEMENT.setValue( POSITIONS_LEFT.length );
+    // +1 since we removed the new item from the array above
+ITEMS_LEFT_ELEMENT.setValue( POSITIONS_LEFT.length + 1 );
 }
 
 

@@ -7,6 +7,7 @@ body
     background-color: black;
     color: #CCC;
     font-family: helvetica, arial sans-serif;
+    font-size: 24px;
     }
 
 
@@ -78,7 +79,7 @@ body
 
 #ControlsMenu
     {
-    padding-top: 40px;
+    padding-top: 37px;
     }
 
 #InfoMenu .Game-Value span:last-child
