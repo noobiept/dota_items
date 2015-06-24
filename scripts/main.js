@@ -34,8 +34,15 @@ HTML_CONTAINER = document.querySelector( '#GameContainer' );
 HTML_IMAGE = HTML_CONTAINER.querySelector( '#ItemImage' );
 HTML_NAME = HTML_CONTAINER.querySelector( '#ItemName' );
 
+var patchVersion = HTML_CONTAINER.querySelector( '#PatchVersion' );
+
+patchVersion.innerHTML = PATCH_VERSION;
+
+
 Message.init();
 
+
+    // initialize the menu
 var costMenu = new Game.Html.HtmlContainer({ cssId: 'CostMenu' });
 var price1 = new Game.Html.Button({
         value: 0,
@@ -83,7 +90,7 @@ gameMenu.container.appendChild( controlsMenu.container );
 HTML_CONTAINER.appendChild( gameMenu.container );
 
 
-TIMER = new Utilities.Timer( timer.container );
+TIMER = new Game.Utilities.Timer( timer.container );
 BUTTONS = [ price1, price2, price3 ];
 HIGHSCORE_ELEMENT = highscore;
 GUESSES_LEFT_ELEMENT = guessesLeft;
@@ -157,7 +164,7 @@ if ( value === CURRENT_ITEM.cost )
             });
 
         message = new Game.Message({
-                text: 'Victory! ' + TIMER.getTimeString(),
+                body: 'Victory! ' + TIMER.getTimeString(),
                 container: HTML_CONTAINER,
                 buttons: ok
             });
@@ -184,7 +191,7 @@ else
             });
 
         message = new Game.Message({
-                text: 'Defeat!',
+                body: 'Defeat!',
                 container: HTML_CONTAINER,
                 background: true,
                 buttons: ok
@@ -226,7 +233,7 @@ var str;
 
 if ( bestTime )
     {
-    str = Utilities.timeToString( bestTime[ 0 ] );
+    str = Game.Utilities.timeToString( bestTime[ 0 ] );
     }
 
 else
@@ -256,7 +263,7 @@ var random;
 
 for (var a = 0 ; a < tries ; a++)
     {
-    random = referenceCost + Utilities.getRandomInt( -20, 20 ) * 5;
+    random = referenceCost + Game.Utilities.getRandomInt( -20, 20 ) * 5;
 
         // see if we already have this value, if so then try again
         // otherwise we got what we came here for
@@ -282,7 +289,7 @@ return random;
 
 function newItem()
 {
-var index = Utilities.getRandomInt( 0, POSITIONS_LEFT.length - 1 );
+var index = Game.Utilities.getRandomInt( 0, POSITIONS_LEFT.length - 1 );
 var randomPosition = POSITIONS_LEFT.splice( index, 1 )[ 0 ];
 
 var item = ITEMS[ randomPosition ];

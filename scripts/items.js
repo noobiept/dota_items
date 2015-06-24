@@ -1,3 +1,4 @@
+var PATCH_VERSION = '6.84';
 var ITEMS = [
     { id: "Abyssal Blade", cost: 6750, url: 'http://cdn.dota2.com/apps/dota2/images/items/abyssal_blade_lg.png' },
     { id: "Aghanim's Scepter", "cost": 4200, url: 'http://cdn.dota2.com/apps/dota2/images/items/ultimate_scepter_lg.png' },
@@ -31,9 +32,6 @@ var ITEMS = [
     { id: "Crystalys", cost: 2120, url: 'http://cdn.dota2.com/apps/dota2/images/items/lesser_crit_lg.png' },
     { id: "Daedalus", cost: 5520, url: 'http://cdn.dota2.com/apps/dota2/images/items/greater_crit_lg.png' },
     { id: "Dagon 1", cost: 2720, url: 'http://cdn.dota2.com/apps/dota2/images/items/dagon_lg.png' },
-    { id: "Dagon 2", cost: 3970, url: 'http://cdn.dota2.com/apps/dota2/images/items/dagon_lg.png' },
-    { id: "Dagon 3", cost: 5220, url: 'http://cdn.dota2.com/apps/dota2/images/items/dagon_lg.png' },
-    { id: "Dagon 4", cost: 6470, url: 'http://cdn.dota2.com/apps/dota2/images/items/dagon_lg.png' },
     { id: "Dagon 5", cost: 7720, url: 'http://cdn.dota2.com/apps/dota2/images/items/dagon_lg.png' },
     { id: "Demon Edge", cost: 2400, url: 'http://cdn.dota2.com/apps/dota2/images/items/demon_edge_lg.png' },
     { id: "Desolator", cost: 3500, url: 'http://cdn.dota2.com/apps/dota2/images/items/desolator_lg.png' },
@@ -84,7 +82,6 @@ var ITEMS = [
     { id: "Morbid Mask", cost: 900, url: 'http://cdn.dota2.com/apps/dota2/images/items/lifesteal_lg.png' },
     { id: "Mystic Staff", cost: 2700, url: 'http://cdn.dota2.com/apps/dota2/images/items/mystic_staff_lg.png' },
     { id: "Necronomicon 1", cost: 2700, url: 'http://cdn.dota2.com/apps/dota2/images/items/necronomicon_lg.png' },
-    { id: "Necronomicon 2", cost: 3950, url: 'http://cdn.dota2.com/apps/dota2/images/items/necronomicon_lg.png' },
     { id: "Necronomicon 3", cost: 5200, url: 'http://cdn.dota2.com/apps/dota2/images/items/necronomicon_lg.png' },
     { id: "Null Talisman", cost: 470, url: 'http://cdn.dota2.com/apps/dota2/images/items/null_talisman_lg.png' },
     { id: "Oblivion Staff", cost: 1650, url: 'http://cdn.dota2.com/apps/dota2/images/items/oblivion_staff_lg.png' },
