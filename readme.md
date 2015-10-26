@@ -1,1 +1,1 @@
-You can try it out here -> [http://dota-items.herokuapp.com/](http://dota-items.herokuapp.com/)
+You can try it out here -> [http://nbpt.eu/games/dota_items/](http://nbpt.eu/games/dota_items/)

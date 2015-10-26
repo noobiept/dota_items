@@ -39,7 +39,7 @@ var Main;
  * }
  */
 var ITEMS;
-var ITEM_NAMES = [];    // a list with all the item names (the key to the 'ITEMS')
+var ITEM_NAMES;     // a list with all the item names (the key to the 'ITEMS')
 
 var BUTTONS = [];
 var CURRENT_ITEM;
@@ -147,11 +147,23 @@ updateHighScore();
  */
 Main.loadItemData = function( data )
 {
+var a;
+
 ITEMS = data[ 'itemdata' ];
+
+    // remove some items that aren't in the standard game
+    // and some of the mid-upgrade items (like dagon 2, dagon 3, etc, only show the first and last one)
+var invalidItems = [ 'cheese', 'aegis', 'halloween_candy_corn', 'mystery_hook', 'mystery_arrow', 'mystery_missile', 'mystery_toss', 'mystery_vacuum', 'halloween_rapier', 'greevil_whistle', 'greevil_whistle_toggle', 'present', 'winter_stocking', 'winter_skates', 'winter_cake', 'winter_cookie', 'winter_coco', 'winter_ham', 'winter_kringle', 'winter_mushroom', 'winter_greevil_treat', 'winter_greevil_garbage', 'winter_greevil_chewy', 'dagon_2', 'dagon_3', 'dagon_4', 'necronomicon_2', 'ward_dispenser', 'tango_single' ];
+
+for (a = 0 ; a < invalidItems.length ; a++)
+    {
+    delete ITEMS[ invalidItems[ a ] ];
+    }
+
 ITEM_NAMES = Object.keys( ITEMS );
 
     // update the image links with the complete url
-for (var a = 0 ; a < ITEM_NAMES.length ; a++)
+for (a = 0 ; a < ITEM_NAMES.length ; a++)
     {
     var name = ITEM_NAMES[ a ];
     var info = ITEMS[ name ];
