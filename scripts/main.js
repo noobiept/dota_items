@@ -311,8 +311,8 @@ HIGHSCORE_ELEMENT.setValue( str );
 }
 
 
-/*
-    Get a random value around the reference cost, and try not to get a repeated value.
+/**
+ * Get a random value around the reference cost, and try not to get a repeated value.
  */
 function getRandomCost( referenceCost, excludeValues )
 {

@@ -1,12 +1,10 @@
-(function(window)
-{
-function Message()
-{
+var Message;
+(function(Message) {
 
-}
 
 var ELEMENT;
 var TIMEOUT_ID = null;
+
 
 Message.init = function()
 {
@@ -61,8 +59,4 @@ Message.show( 'Incorrect!' );
 };
 
 
-
-
-window.Message = Message;
-
-})(window);
+})(Message || (Message = {}));
