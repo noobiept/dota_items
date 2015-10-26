@@ -55,6 +55,8 @@ var ITEMS_LEFT_ELEMENT;
 var HTML_CONTAINER;
 var HTML_IMAGE;
 var HTML_NAME;
+var HTML_TOOLTIP_ATTRIBUTES;
+var HTML_TOOLTIP_LORE;
 
 
 Main.init = function()
@@ -62,6 +64,20 @@ Main.init = function()
 HTML_CONTAINER = document.querySelector( '#GameContainer' );
 HTML_IMAGE = HTML_CONTAINER.querySelector( '#ItemImage' );
 HTML_NAME = HTML_CONTAINER.querySelector( '#ItemName' );
+HTML_TOOLTIP_ATTRIBUTES = document.getElementById( 'ItemTooltipAttributes' );
+HTML_TOOLTIP_LORE = document.getElementById( 'ItemTooltipLore' );
+
+var tooltip = document.getElementById( 'ItemTooltip' );
+
+    // show the tooltip when the mouse is over the image
+HTML_IMAGE.addEventListener( 'mouseover', function( event )
+    {
+    tooltip.style.display = 'block';
+    });
+HTML_IMAGE.addEventListener( 'mouseout', function( event )
+    {
+    tooltip.style.display = 'none';
+    });
 
 Message.init();
 
@@ -338,6 +354,8 @@ var values = shuffle([ rightCost, cost2, cost3 ]);
 
 HTML_IMAGE.src = item.img;
 HTML_NAME.innerHTML = item.dname;
+HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib;
+HTML_TOOLTIP_LORE.innerHTML = item.lore;
 
 
 for (var a = BUTTONS.length - 1 ; a >= 0 ; a--)
