@@ -1,3 +1,13 @@
+/**
+ * This is called with the item data from the JSONP script.
+ * The callback in the JSONP doesn't accept dots, so can't call the function in the module directly.
+ */
+function loadItemData( data )
+{
+Main.loadItemData( data );
+}
+
+
 window.onload = function()
 {
 Main.init();
@@ -5,16 +15,35 @@ Main.start();
 };
 
 
-(function(window)
-{
-function Main()
-{
+var Main;
+(function(Main) {
 
-}
+/**
+ * items = {
+ *     "item_name": {
+ *         "id": number,
+ *         "img": str,  // file name, need to prepend the base url
+ *         "dname": str,    // display name
+ *         "qual": str,
+ *         "cost": number,
+ *         "desc": str,     // item description
+ *         "notes": str,    // also item description
+ *         "attrib": str,
+ *         "mc": boolean,
+ *         "cd": number,    // cooldown
+ *         "lore": str,
+ *         "components": string[],  // array of the item names, or null
+ *         "created": boolean
+ *     },
+ *     // etc
+ * }
+ */
+var ITEMS;
+var ITEM_NAMES = [];    // a list with all the item names (the key to the 'ITEMS')
 
 var BUTTONS = [];
 var CURRENT_ITEM;
-var POSITIONS_LEFT = [];
+var ITEMS_LEFT = [];
 var TIMER;
 var GUESSES_LEFT;
 var MAX_GUESSES = 5;
@@ -33,11 +62,6 @@ Main.init = function()
 HTML_CONTAINER = document.querySelector( '#GameContainer' );
 HTML_IMAGE = HTML_CONTAINER.querySelector( '#ItemImage' );
 HTML_NAME = HTML_CONTAINER.querySelector( '#ItemName' );
-
-var patchVersion = HTML_CONTAINER.querySelector( '#PatchVersion' );
-
-patchVersion.innerHTML = PATCH_VERSION;
-
 
 Message.init();
 
@@ -102,13 +126,28 @@ updateHighScore();
 };
 
 
+/**
+ * Load the item data.
+ */
+Main.loadItemData = function( data )
+{
+ITEMS = data[ 'itemdata' ];
+ITEM_NAMES = Object.keys( ITEMS );
+
+    // update the image links with the complete url
+for (var a = 0 ; a < ITEM_NAMES.length ; a++)
+    {
+    var name = ITEM_NAMES[ a ];
+    var info = ITEMS[ name ];
+
+    info.img = 'http://cdn.dota2.com/apps/dota2/images/items/' + info.img;
+    }
+};
+
 
 Main.start = function()
 {
-for (var a = ITEMS.length - 1 ; a >= 0 ; a--)
-    {
-    POSITIONS_LEFT.push( a );
-    }
+ITEMS_LEFT = ITEM_NAMES.slice();
 
 updateGuessesleft( MAX_GUESSES );
 
@@ -120,7 +159,7 @@ newItem();
 Main.clear = function()
 {
 TIMER.reset();
-POSITIONS_LEFT.length = 0;
+ITEMS_LEFT.length = 0;
 };
 
 
@@ -129,7 +168,6 @@ Main.restart = function()
 Main.clear();
 Main.start();
 };
-
 
 
 function clicked( button )
@@ -141,7 +179,7 @@ if ( value === CURRENT_ITEM.cost )
     {
     Message.correct();
 
-    if ( POSITIONS_LEFT.length > 0 )
+    if ( ITEMS_LEFT.length > 0 )
         {
         newItem();
         }
@@ -225,7 +263,6 @@ else
 }
 
 
-
 function updateHighScore()
 {
 var bestTime = Game.HighScore.get( 'time' );
@@ -286,24 +323,21 @@ return random;
 }
 
 
-
 function newItem()
 {
-var index = Game.Utilities.getRandomInt( 0, POSITIONS_LEFT.length - 1 );
-var randomPosition = POSITIONS_LEFT.splice( index, 1 )[ 0 ];
+var index = Game.Utilities.getRandomInt( 0, ITEMS_LEFT.length - 1 );
+var randomName = ITEMS_LEFT.splice( index, 1 )[ 0 ];
 
-var item = ITEMS[ randomPosition ];
+var item = ITEMS[ randomName ];
 
 var rightCost = item.cost;
 var cost2 = getRandomCost( rightCost );
 var cost3 = getRandomCost( rightCost, [ cost2 ] );
 
-
 var values = shuffle([ rightCost, cost2, cost3 ]);
 
-
-HTML_IMAGE.src = item.url;
-HTML_NAME.innerHTML = item.id;
+HTML_IMAGE.src = item.img;
+HTML_NAME.innerHTML = item.dname;
 
 
 for (var a = BUTTONS.length - 1 ; a >= 0 ; a--)
@@ -314,9 +348,8 @@ for (var a = BUTTONS.length - 1 ; a >= 0 ; a--)
 CURRENT_ITEM = item;
 
     // +1 since we removed the new item from the array above
-ITEMS_LEFT_ELEMENT.setValue( POSITIONS_LEFT.length + 1 );
+ITEMS_LEFT_ELEMENT.setValue( ITEMS_LEFT.length + 1 );
 }
-
 
 
 function shuffle( array )
@@ -342,7 +375,4 @@ return array;
 }
 
 
-
-window.Main = Main;
-
-})(window);
+})(Main || (Main = {}));

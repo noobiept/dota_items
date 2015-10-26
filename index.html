@@ -7,19 +7,18 @@
 
         <script type="text/javascript" src="libraries/game_engine.1.2.1.min.js"></script>
 
-
         <link rel="stylesheet" href="style.css" />
-
 
         <!-- build:js dota_items.min.js -->
         <script type="text/javascript" src="scripts/message.js"></script>
-        <script type="text/javascript" src="scripts/items.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script>
         <!-- /build -->
+
+        <!-- needs to be after the program files, so that the callback is defined -->
+        <script type="text/javascript" src="http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english&callback=loadItemData"></script>
     </head>
 <body>
     <div id="GameContainer">
-        <div id="PatchVersion"></div>
         <div id="ItemContainer">
             <img id="ItemImage" src="" />
             <div id="ItemName"></div>

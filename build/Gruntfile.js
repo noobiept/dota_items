@@ -15,7 +15,6 @@ grunt.initConfig({
             release: {
                 files: {
                     '../release/<%= pkg.name %>_<%= pkg.version %>/dota_items.min.js': [
-                        '../scripts/items.js',
                         '../scripts/main.js',
                         '../scripts/message.js'
                     ]

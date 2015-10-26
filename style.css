@@ -36,15 +36,6 @@ body
     }
 
 
-#PatchVersion
-    {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: rgba(204, 204, 204, 0.3);
-    }
-
-
     /* ---- Item ---- */
 
 #ItemContainer
