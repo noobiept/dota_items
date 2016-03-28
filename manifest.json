@@ -7,6 +7,7 @@
     "manifest_version": 2,
     "permissions": [
         "http://cdn.dota2.com/",
-        "http://www.dota2.com/"
+        "http://www.dota2.com/",
+        "storage"
     ]
 }

@@ -135,9 +135,7 @@ HIGHSCORE_ELEMENT = highscore;
 GUESSES_LEFT_ELEMENT = guessesLeft;
 ITEMS_LEFT_ELEMENT = itemsLeft;
 
-//Game.HighScore.init( 1, 'dota_items_highscore', true ); //HERE
-
-updateHighScore();
+HighScore.init();
 Main.start();
 };
 
@@ -216,9 +214,8 @@ if ( value === CURRENT_ITEM.cost )
         {
         TIMER.stop();
 
-        //Game.HighScore.add( 'time', TIMER.getTimeMilliseconds() ); //HERE
-
-        updateHighScore();
+        HighScore.add( TIMER.getTimeMilliseconds() );
+        Main.updateHighScore();
 
         ok = new Game.Html.Button({
                 value: 'Ok',
@@ -291,15 +288,14 @@ else
 }
 
 
-function updateHighScore()
+Main.updateHighScore = function()
 {
-//var bestTime = Game.HighScore.get( 'time' );
-var bestTime = [ 10 ]; //HERE
+var bestTime = HighScore.getBestScore();
 var str;
 
-if ( bestTime )
+if ( bestTime > 0 )
     {
-    str = Game.Utilities.timeToString( bestTime[ 0 ] );
+    str = Game.Utilities.timeToString( bestTime );
     }
 
 else
@@ -309,7 +305,7 @@ else
 
 
 HIGHSCORE_ELEMENT.setValue( str );
-}
+};
 
 
 /**
