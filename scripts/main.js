@@ -1,17 +1,9 @@
-/**
- * This is called with the item data from the JSONP script.
- * The callback in the JSONP doesn't accept dots, so can't call the function in the module directly.
- */
-function loadItemData( data )
-{
-Main.loadItemData( data );
-}
-
-
 window.onload = function()
 {
-Main.init();
-Main.start();
+Main.getJson( 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english', function( data )
+    {
+    Main.init( data );
+    });
 };
 
 
@@ -59,13 +51,20 @@ var HTML_TOOLTIP_ATTRIBUTES;
 var HTML_TOOLTIP_LORE;
 
 
-Main.init = function()
+Main.init = function( data )
 {
+Main.loadItemData( data );
+
 HTML_CONTAINER = document.querySelector( '#GameContainer' );
 HTML_IMAGE = HTML_CONTAINER.querySelector( '#ItemImage' );
 HTML_NAME = HTML_CONTAINER.querySelector( '#ItemName' );
 HTML_TOOLTIP_ATTRIBUTES = document.getElementById( 'ItemTooltipAttributes' );
 HTML_TOOLTIP_LORE = document.getElementById( 'ItemTooltipLore' );
+
+    // load the background image of the game container
+Main.getBlob( 'http://cdn.dota2.com/apps/dota2/images/quiz/keeper.png', function( data ) {
+    //HERE
+});
 
 var tooltip = document.getElementById( 'ItemTooltip' );
 
@@ -136,9 +135,10 @@ HIGHSCORE_ELEMENT = highscore;
 GUESSES_LEFT_ELEMENT = guessesLeft;
 ITEMS_LEFT_ELEMENT = itemsLeft;
 
-Game.HighScore.init( 1, 'dota_items_highscore', true );
+//Game.HighScore.init( 1, 'dota_items_highscore', true ); //HERE
 
 updateHighScore();
+Main.start();
 };
 
 
@@ -216,7 +216,7 @@ if ( value === CURRENT_ITEM.cost )
         {
         TIMER.stop();
 
-        Game.HighScore.add( 'time', TIMER.getTimeMilliseconds() );
+        //Game.HighScore.add( 'time', TIMER.getTimeMilliseconds() ); //HERE
 
         updateHighScore();
 
@@ -293,7 +293,8 @@ else
 
 function updateHighScore()
 {
-var bestTime = Game.HighScore.get( 'time' );
+//var bestTime = Game.HighScore.get( 'time' );
+var bestTime = [ 10 ]; //HERE
 var str;
 
 if ( bestTime )
@@ -364,7 +365,10 @@ var cost3 = getRandomCost( rightCost, [ cost2 ] );
 
 var values = shuffle([ rightCost, cost2, cost3 ]);
 
-HTML_IMAGE.src = item.img;
+Main.getBlob( item.img, function( src ) {
+        HTML_IMAGE.src = src;
+    });
+
 HTML_NAME.innerHTML = item.dname;
 HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib;
 HTML_TOOLTIP_LORE.innerHTML = item.lore;
@@ -403,6 +407,34 @@ while( currentIndex !== 0 )
 
 return array;
 }
+
+
+Main.getBlob = function( url, callback )
+{
+var xhr = new XMLHttpRequest();
+xhr.open( 'GET', url, true );
+xhr.responseType = 'blob';
+xhr.onload = function( e )
+    {
+    callback( window.URL.createObjectURL( this.response ) );
+    };
+
+xhr.send();
+};
+
+
+Main.getJson = function( url, callback )
+{
+var xhr = new XMLHttpRequest();
+xhr.open( 'GET', url, true );
+xhr.responseType = 'json';
+xhr.onload = function( e )
+    {
+    callback( this.response );
+    };
+
+xhr.send();
+};
 
 
 })(Main || (Main = {}));
