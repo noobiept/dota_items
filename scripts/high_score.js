@@ -1,3 +1,6 @@
+/*global AppStorage, Main*/
+'use strict';
+
 var HighScore;
 (function(HighScore) {
 
@@ -5,7 +8,7 @@ var HighScore;
 var HIGH_SCORE = -1;    // valid scores are always positive
 
 
-HighScore.init = function( element )
+HighScore.init = function()
 {
 AppStorage.getData( [ 'dota_items_highscore' ], function( data )
     {

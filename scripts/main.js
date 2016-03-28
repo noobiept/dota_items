@@ -1,3 +1,6 @@
+/*global Game, Message, HighScore*/
+'use strict';
+
 window.onload = function()
 {
 Main.getJson( 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english', function( data )
