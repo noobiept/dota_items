@@ -1,5 +1,8 @@
 chrome.app.runtime.onLaunched.addListener( function() {
     chrome.app.window.create( 'index.html', {
-        'state': 'maximized'
+        'innerBounds': {
+            'width': 664,
+            'height': 362
+        }
     });
 });

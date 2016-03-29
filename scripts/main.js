@@ -64,11 +64,6 @@ HTML_NAME = HTML_CONTAINER.querySelector( '#ItemName' );
 HTML_TOOLTIP_ATTRIBUTES = document.getElementById( 'ItemTooltipAttributes' );
 HTML_TOOLTIP_LORE = document.getElementById( 'ItemTooltipLore' );
 
-    // load the background image of the game container
-Main.getBlob( 'http://cdn.dota2.com/apps/dota2/images/quiz/keeper.png', function( data ) {
-    //HERE
-});
-
 var tooltip = document.getElementById( 'ItemTooltip' );
 
     // show the tooltip when the mouse is over the image
