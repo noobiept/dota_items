@@ -26,7 +26,14 @@ AppStorage.getData( [ 'dota_items_highscore' ], function( data )
 
 HighScore.add = function( score )
 {
-if ( score > HIGH_SCORE )
+    // first score added
+if ( HIGH_SCORE < 0 )
+    {
+    HIGH_SCORE = score;
+    save();
+    }
+
+else if ( score < HIGH_SCORE )
     {
     HIGH_SCORE = score;
     save();
