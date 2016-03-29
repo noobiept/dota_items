@@ -1,12 +1,39 @@
 /*global Game, Message, HighScore*/
 'use strict';
 
+
+    // to know if the program will run as a chrome app or as a web app
+var WEB_APP = false;
+
+
+/**
+ * This is called with the item data from the JSONP script.
+ * The callback in the JSONP doesn't accept dots, so can't call the function in the module directly.
+ */
+function loadItemData( data )
+{
+Main.init( data );
+}
+
+
 window.onload = function()
 {
-Main.getJson( 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english', function( data )
+if ( WEB_APP )
     {
-    Main.init( data );
-    });
+    var script = document.createElement( 'script' );
+    script.src = 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english&callback=loadItemData';
+
+    document.getElementsByTagName( 'head' )[ 0 ].appendChild( script );
+    }
+
+else
+    {
+    Main.getJson( 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english',
+    function( data )
+        {
+        Main.init( data );
+        });
+    }
 };
 
 
@@ -359,9 +386,17 @@ var cost3 = getRandomCost( rightCost, [ cost2 ] );
 
 var values = shuffle([ rightCost, cost2, cost3 ]);
 
-Main.getBlob( item.img, function( src ) {
-        HTML_IMAGE.src = src;
-    });
+if ( WEB_APP )
+    {
+    HTML_IMAGE.src = item.img;
+    }
+
+else
+    {
+    Main.getBlob( item.img, function( src ) {
+            HTML_IMAGE.src = src;
+        });
+    }
 
 HTML_NAME.innerHTML = item.dname;
 HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib;
@@ -417,16 +452,15 @@ xhr.send();
 };
 
 
-Main.getJson = function( url, callback )
+Main.getJson = function( url, onLoad )
 {
 var xhr = new XMLHttpRequest();
 xhr.open( 'GET', url, true );
 xhr.responseType = 'json';
 xhr.onload = function( e )
     {
-    callback( this.response );
+    onLoad( this.response );
     };
-
 xhr.send();
 };
 
