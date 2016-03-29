@@ -115,7 +115,7 @@ body
     padding: 10px;
     background-color: #2a2d30;
     border: 8px solid;
-    border-image: url('http://cdn.dota2.com/apps/dota2/images/quiz/border.png') 15 15 round;
+    border-image: url('/images/border.png') 15 15 round;
     min-width: 200px;
     color: #bcbcbc;
     }

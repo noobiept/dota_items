@@ -1,9 +1,10 @@
 /*global Game, Message, HighScore*/
+/*exported loadItemData*/
 'use strict';
 
 
     // to know if the program will run as a chrome app or as a web app
-var WEB_APP = false;
+var WEB_APP = true;
 
 
 /**
@@ -18,6 +19,12 @@ Main.init( data );
 
 window.onload = function()
 {
+    // detect if the program is running as a chrome app
+if ( window.chrome && window.chrome.storage )
+    {
+    WEB_APP = false;
+    }
+
 if ( WEB_APP )
     {
     var script = document.createElement( 'script' );
