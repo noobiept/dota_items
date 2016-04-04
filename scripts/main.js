@@ -145,9 +145,16 @@ var restart = new Game.Html.Button({
         value: 'Restart',
         callback: Main.restart
     });
+var donate = new Game.Html.Button({
+        value: 'Donate',
+        callback: function()
+            {
+            window.open( 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UQ6ZF2JKUC626', '_blank' );
+            }
+    });
 var highscore = new Game.Html.Value({ value: '', preText: 'Best time: ' });
 
-controlsMenu.addChild( restart, highscore );
+controlsMenu.addChild( restart, donate, highscore );
 
 var gameMenu = new Game.Html.HtmlContainer({
         cssId: 'GameMenu'
