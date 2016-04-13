@@ -28,7 +28,7 @@ body
 
 #GameContainer
     {
-    background: url('/images/background.png') top no-repeat;
+    background: url('../images/background.png') top no-repeat;
     width: 664px;
     height: 362px;
     margin: auto;
