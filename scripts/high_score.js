@@ -1,4 +1,4 @@
-/*global AppStorage, Main*/
+/*global AppStorage, Main, Game*/
 'use strict';
 
 var HighScore;
@@ -14,7 +14,7 @@ AppStorage.getData( [ 'dota_items_highscore' ], function( data )
     {
     var score = data[ 'dota_items_highscore' ];
 
-    if ( typeof score !== 'undefined' )
+    if ( Game.Utilities.isInteger( score ) )
         {
         HIGH_SCORE = score;
         }
