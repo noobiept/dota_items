@@ -268,6 +268,7 @@ if ( value === CURRENT_ITEM.cost )
         message = new Game.Message({
                 body: 'Victory! ' + TIMER.getTimeString(),
                 container: HTML_CONTAINER,
+                background: true,
                 buttons: ok
             });
         }
