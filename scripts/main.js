@@ -149,7 +149,7 @@ var donate = new Game.Html.Button({
         value: 'Donate',
         callback: function()
             {
-            window.open( 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UQ6ZF2JKUC626', '_blank' );
+            window.open( 'http://nbpt.eu/donate/', '_blank' );
             }
     });
 var highscore = new Game.Html.Value({ value: '', preText: 'Best time: ' });
