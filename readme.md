@@ -2,6 +2,8 @@
 
 Guess the correct price off the dota items, to win the game. Inspired by the "shopkeeper's quiz" game.
 
+![Game Image](images/promotion/promotion1.png "Game Image")
+
 # Attribution #
 
 - Sounds/images are part of the game [dota2](http://www.dota2.com/).
