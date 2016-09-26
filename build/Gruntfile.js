@@ -32,8 +32,7 @@ grunt.initConfig({
                 src: [
                     'images/*.png',
                     'libraries/*.js',
-                    'background.js',
-                    'manifest.json'
+                    'sounds/**'
                 ],
                 dest: dest
             }

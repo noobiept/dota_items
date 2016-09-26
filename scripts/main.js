@@ -1,4 +1,4 @@
-/*global Game, Message, HighScore*/
+/*global Game, Message, HighScore, Sound*/
 /*exported loadItemData*/
 'use strict';
 
