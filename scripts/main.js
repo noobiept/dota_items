@@ -3,10 +3,6 @@
 'use strict';
 
 
-    // to know if the program will run as a chrome app or as a web app
-var WEB_APP = true;
-
-
 /**
  * This is called with the item data from the JSONP script.
  * The callback in the JSONP doesn't accept dots, so can't call the function in the module directly.
@@ -19,28 +15,10 @@ Main.init( data );
 
 window.onload = function()
 {
-    // detect if the program is running as a chrome app
-if ( window.chrome && window.chrome.storage )
-    {
-    WEB_APP = false;
-    }
+var script = document.createElement( 'script' );
+script.src = 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english&callback=loadItemData';
 
-if ( WEB_APP )
-    {
-    var script = document.createElement( 'script' );
-    script.src = 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english&callback=loadItemData';
-
-    document.getElementsByTagName( 'head' )[ 0 ].appendChild( script );
-    }
-
-else
-    {
-    Main.getJson( 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english',
-    function( data )
-        {
-        Main.init( data );
-        });
-    }
+document.getElementsByTagName( 'head' )[ 0 ].appendChild( script );
 };
 
 
@@ -145,16 +123,9 @@ var restart = new Game.Html.Button({
         value: 'Restart',
         callback: Main.restart
     });
-var donate = new Game.Html.Button({
-        value: 'Donate',
-        callback: function()
-            {
-            window.open( 'http://nbpt.eu/donate/', '_blank' );
-            }
-    });
 var highscore = new Game.Html.Value({ value: '', preText: 'Best time: ' });
 
-controlsMenu.addChild( restart, donate, highscore );
+controlsMenu.addChild( restart, highscore );
 
 var gameMenu = new Game.Html.HtmlContainer({
         cssId: 'GameMenu'
@@ -410,22 +381,10 @@ var cost3 = getRandomCost( rightCost, [ cost2 ] );
 
 var values = shuffle([ rightCost, cost2, cost3 ]);
 
-if ( WEB_APP )
-    {
-    HTML_IMAGE.src = item.img;
-    }
-
-else
-    {
-    Main.getBlob( item.img, function( src ) {
-            HTML_IMAGE.src = src;
-        });
-    }
-
+HTML_IMAGE.src = item.img;
 HTML_NAME.innerHTML = item.dname;
 HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib;
 HTML_TOOLTIP_LORE.innerHTML = item.lore;
-
 
 for (var a = BUTTONS.length - 1 ; a >= 0 ; a--)
     {
@@ -460,33 +419,6 @@ while( currentIndex !== 0 )
 
 return array;
 }
-
-
-Main.getBlob = function( url, callback )
-{
-var xhr = new XMLHttpRequest();
-xhr.open( 'GET', url, true );
-xhr.responseType = 'blob';
-xhr.onload = function( e )
-    {
-    callback( window.URL.createObjectURL( this.response ) );
-    };
-
-xhr.send();
-};
-
-
-Main.getJson = function( url, onLoad )
-{
-var xhr = new XMLHttpRequest();
-xhr.open( 'GET', url, true );
-xhr.responseType = 'json';
-xhr.onload = function( e )
-    {
-    onLoad( this.response );
-    };
-xhr.send();
-};
 
 
 })(Main || (Main = {}));
