@@ -177,6 +177,13 @@ ITEMS_LEFT_ELEMENT = itemsLeft;
 Sound.init();
 HighScore.init();
 Main.start();
+
+    // show the game after the load
+HTML_CONTAINER.style.display = 'block';
+
+    // and hide the loading message
+var loading = document.getElementById( 'Loading' );
+loading.style.display = 'none';
 };
 
 

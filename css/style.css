@@ -33,6 +33,7 @@ body
     height: 362px;
     margin: auto;
     position: relative;
+    display: none;
     }
 
 
@@ -167,4 +168,14 @@ body
     top: 50%;
     transform: translate(-50%, -50%);
     transition: opacity 0.2s;
+    }
+
+#Loading
+    {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #CCC;
+    font-size: 130%;
     }
