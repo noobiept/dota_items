@@ -174,6 +174,7 @@ HIGHSCORE_ELEMENT = highscore;
 GUESSES_LEFT_ELEMENT = guessesLeft;
 ITEMS_LEFT_ELEMENT = itemsLeft;
 
+Sound.init();
 HighScore.init();
 Main.start();
 };
@@ -243,6 +244,7 @@ var message, ok;
 if ( value === CURRENT_ITEM.cost )
     {
     Message.correct();
+    Sound.playCorrect();
 
     if ( ITEMS_LEFT.length > 0 )
         {
