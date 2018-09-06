@@ -4,6 +4,11 @@ Guess the correct price off the dota items, to win the game. Inspired by the "sh
 
 ![Game Image](images/promotion/promotion1.png "Game Image")
 
+# Commands #
+
+- `npm install` - install the dependencies.
+- `npm run build` - start the release build.
+
 # Attribution #
 
 - Sounds/images are part of the game [dota2](https://www.dota2.com/).

@@ -10,5 +10,8 @@
         "grunt-processhtml": "~0.4.1",
         "grunt-eslint": "~21.0.0",
         "eslint": "~5.5.0"
+    },
+    "scripts": {
+        "build": "grunt"
     }
 }
