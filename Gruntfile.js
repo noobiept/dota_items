@@ -1,7 +1,7 @@
 module.exports = function( grunt )
 {
-var root = '../';
-var dest = '../release/<%= pkg.name %>_<%= pkg.version %>/';
+var root = './';
+var dest = './release/<%= pkg.name %>_<%= pkg.version %>/';
 
 grunt.initConfig({
         pkg: grunt.file.readJSON( 'package.json' ),
@@ -15,10 +15,6 @@ grunt.initConfig({
 
             // remove the destination folder first
         clean: {
-            options: {
-                force: true
-            },
-
             release: [
                 dest
             ]
