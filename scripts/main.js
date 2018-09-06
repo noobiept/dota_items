@@ -16,7 +16,7 @@ Main.init( data );
 window.onload = function()
 {
 var script = document.createElement( 'script' );
-script.src = 'http://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english&callback=loadItemData';
+script.src = 'https://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english&callback=loadItemData';
 
 document.getElementsByTagName( 'head' )[ 0 ].appendChild( script );
 };
@@ -184,7 +184,7 @@ for (a = 0 ; a < ITEM_NAMES.length ; a++)
     var name = ITEM_NAMES[ a ];
     var info = ITEMS[ name ];
 
-    info.img = 'http://cdn.dota2.com/apps/dota2/images/items/' + info.img;
+    info.img = 'https://cdn.dota2.com/apps/dota2/images/items/' + info.img;
     }
 };
 

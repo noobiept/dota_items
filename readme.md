@@ -1,4 +1,4 @@
-# [http://nbpt.eu/games/dota_items/](http://nbpt.eu/games/dota_items/) #
+# [Try it out here!](https://nbpt.eu/games/dota_items) #
 
 Guess the correct price off the dota items, to win the game. Inspired by the "shopkeeper's quiz" game.
 
@@ -6,7 +6,7 @@ Guess the correct price off the dota items, to win the game. Inspired by the "sh
 
 # Attribution #
 
-- Sounds/images are part of the game [dota2](http://www.dota2.com/).
+- Sounds/images are part of the game [dota2](https://www.dota2.com/).
 
 # Libraries #
 
