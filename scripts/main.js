@@ -3,22 +3,13 @@
 'use strict';
 
 
-/**
- * This is called with the item data from the JSONP script.
- * The callback in the JSONP doesn't accept dots, so can't call the function in the module directly.
- */
-function loadItemData( data )
+window.onload = async function()
 {
-Main.init( data );
-}
-
-
-window.onload = function()
-{
-var script = document.createElement( 'script' );
-script.src = 'https://www.dota2.com/jsfeed/itemdata?v=3035314b3035314&l=english&callback=loadItemData';
-
-document.getElementsByTagName( 'head' )[ 0 ].appendChild( script );
+    const response = await fetch(
+        "https://raw.githubusercontent.com/odota/dotaconstants/master/build/items.json"
+    );
+    const data = await response.json();
+    Main.init(data)
 };
 
 
@@ -165,7 +156,7 @@ Main.loadItemData = function( data )
 {
 var a;
 
-ITEMS = data[ 'itemdata' ];
+ITEMS = data;
 
     // remove some items that aren't in the standard game
     // and some of the mid-upgrade items (like dagon 2, dagon 3, etc, only show the first and last one)
@@ -184,7 +175,7 @@ for (a = 0 ; a < ITEM_NAMES.length ; a++)
     var name = ITEM_NAMES[ a ];
     var info = ITEMS[ name ];
 
-    info.img = 'https://cdn.dota2.com/apps/dota2/images/items/' + info.img;
+    info.img = 'https://cdn.dota2.com' + info.img;
     }
 };
 
