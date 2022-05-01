@@ -1,15 +1,15 @@
-let ELEMENT;
-let TIMEOUT_ID = null;
+let ELEMENT: HTMLElement;
+let TIMEOUT_ID: number | null = null;
 
 export function init() {
-    ELEMENT = document.querySelector("#Message");
+    ELEMENT = document.querySelector("#Message")!;
 }
 
-export function show(text) {
+export function show(text: string) {
     stopPrevious();
 
     ELEMENT.innerHTML = text;
-    ELEMENT.style.opacity = 1;
+    ELEMENT.style.opacity = "1";
 
     TIMEOUT_ID = window.setTimeout(function () {
         hide();
@@ -19,7 +19,7 @@ export function show(text) {
 function hide() {
     stopPrevious();
 
-    ELEMENT.style.opacity = 0;
+    ELEMENT.style.opacity = "0";
 }
 
 function stopPrevious() {

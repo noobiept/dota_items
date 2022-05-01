@@ -2,10 +2,11 @@ import { getData, setData } from "./app_storage";
 import { updateHighScore } from "./main";
 
 let HIGH_SCORE = -1; // valid scores are always positive
+const HIGH_SCORE_STORE_KEY = "dota_items_highscore";
 
 export function init() {
-    const data = getData("dota_items_highscore");
-    const score = data["dota_items_highscore"];
+    const data = getData(HIGH_SCORE_STORE_KEY);
+    const score = data[HIGH_SCORE_STORE_KEY] as number;
 
     if (Game.Utilities.isInteger(score)) {
         HIGH_SCORE = score;
@@ -14,7 +15,7 @@ export function init() {
     updateHighScore();
 }
 
-export function add(score) {
+export function add(score: number) {
     // first score added
     if (HIGH_SCORE < 0) {
         HIGH_SCORE = score;
@@ -30,5 +31,5 @@ export function getBestScore() {
 }
 
 function save() {
-    setData({ dota_items_highscore: HIGH_SCORE });
+    setData({ [HIGH_SCORE_STORE_KEY]: HIGH_SCORE });
 }

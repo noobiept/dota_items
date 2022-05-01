@@ -1,7 +1,11 @@
+export type DataObject = {
+    [key: string]: unknown;
+};
+
 /**
  * Get data from the `localStorage`.
  */
-export function getData(...keys: string[]) {
+export function getData(...keys: string[]): DataObject {
     return keys.reduce((data, key) => {
         const item = localStorage.getItem(key);
         const value = item && JSON.parse(item);
@@ -16,7 +20,7 @@ export function getData(...keys: string[]) {
 /**
  * Set data into the `localStorage`.
  */
-export function setData(items) {
+export function setData(items: DataObject) {
     Object.entries(items).forEach(([key, value]) =>
         localStorage.setItem(key, JSON.stringify(value))
     );

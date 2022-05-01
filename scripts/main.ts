@@ -1,6 +1,7 @@
 import * as HighScore from "./high_score";
 import * as Message from "./message";
 import * as Sound from "./sound";
+import { ItemData, ItemsDataDict } from "./types";
 
 window.onload = async function () {
     const response = await fetch(
@@ -30,36 +31,36 @@ window.onload = async function () {
  *     // etc
  * }
  */
-let ITEMS;
-let ITEM_NAMES; // a list with all the item names (the key to the 'ITEMS')
+let ITEMS: ItemsDataDict;
+let ITEM_NAMES: string[]; // a list with all the item names (the key to the 'ITEMS')
 
-let BUTTONS = [];
-let CURRENT_ITEM;
-let ITEMS_LEFT = [];
-let TIMER;
-let GUESSES_LEFT;
+let BUTTONS: Game.Html.Button[] = [];
+let CURRENT_ITEM: ItemData | undefined;
+let ITEMS_LEFT: string[] = [];
+let TIMER: Game.Utilities.Timer;
+let GUESSES_LEFT: number;
 const MAX_GUESSES = 20;
 
-let HIGH_SCORE_ELEMENT;
-let GUESSES_LEFT_ELEMENT;
-let ITEMS_LEFT_ELEMENT;
+let HIGH_SCORE_ELEMENT: Game.Html.Value;
+let GUESSES_LEFT_ELEMENT: Game.Html.Value;
+let ITEMS_LEFT_ELEMENT: Game.Html.Value;
 
-let HTML_CONTAINER;
-let HTML_IMAGE;
-let HTML_NAME;
-let HTML_TOOLTIP_ATTRIBUTES;
-let HTML_TOOLTIP_LORE;
+let HTML_CONTAINER: HTMLElement;
+let HTML_IMAGE: HTMLImageElement;
+let HTML_NAME: HTMLElement;
+let HTML_TOOLTIP_ATTRIBUTES: HTMLElement;
+let HTML_TOOLTIP_LORE: HTMLElement;
 
-function init(data) {
+function init(data: ItemsDataDict) {
     loadItemData(data);
 
-    HTML_CONTAINER = document.querySelector("#GameContainer");
-    HTML_IMAGE = HTML_CONTAINER.querySelector("#ItemImage");
-    HTML_NAME = HTML_CONTAINER.querySelector("#ItemName");
-    HTML_TOOLTIP_ATTRIBUTES = document.getElementById("ItemTooltipAttributes");
-    HTML_TOOLTIP_LORE = document.getElementById("ItemTooltipLore");
+    HTML_CONTAINER = document.querySelector("#GameContainer")!;
+    HTML_IMAGE = HTML_CONTAINER.querySelector("#ItemImage")!;
+    HTML_NAME = HTML_CONTAINER.querySelector("#ItemName")!;
+    HTML_TOOLTIP_ATTRIBUTES = document.getElementById("ItemTooltipAttributes")!;
+    HTML_TOOLTIP_LORE = document.getElementById("ItemTooltipLore")!;
 
-    const tooltip = document.getElementById("ItemTooltip");
+    const tooltip = document.getElementById("ItemTooltip")!;
 
     // show the tooltip when the mouse is over the image
     HTML_IMAGE.addEventListener("mouseover", function () {
@@ -137,14 +138,14 @@ function init(data) {
     HTML_CONTAINER.style.display = "block";
 
     // and hide the loading message
-    const loading = document.getElementById("Loading");
+    const loading = document.getElementById("Loading")!;
     loading.style.display = "none";
 }
 
 /**
  * Load the item data.
  */
-function loadItemData(data) {
+function loadItemData(data: ItemsDataDict) {
     ITEMS = data;
 
     // remove some items that aren't in the standard game
@@ -218,11 +219,12 @@ function restart() {
     start();
 }
 
-function clicked(button) {
+function clicked(button: Game.Html.Button) {
     const value = button.getValue();
-    let message, ok;
+    let message: Game.Message;
+    let ok: Game.Html.Button;
 
-    if (value === CURRENT_ITEM.cost) {
+    if (value === CURRENT_ITEM?.cost) {
         Message.correct();
         Sound.playCorrect();
 
@@ -275,7 +277,7 @@ function clicked(button) {
     }
 }
 
-function updateGuessesLeft(guesses) {
+function updateGuessesLeft(guesses: number) {
     GUESSES_LEFT = guesses;
     GUESSES_LEFT_ELEMENT.setValue(guesses);
 
@@ -306,7 +308,7 @@ export function updateHighScore() {
 /**
  * Get a random value around the reference cost, and try not to get a repeated value.
  */
-function getRandomCost(referenceCost, excludeValues?) {
+function getRandomCost(referenceCost: number, excludeValues?: number[]) {
     if (typeof excludeValues === "undefined") {
         excludeValues = [];
     }
@@ -314,7 +316,7 @@ function getRandomCost(referenceCost, excludeValues?) {
     excludeValues.push(referenceCost);
 
     const tries = 5;
-    let random;
+    let random = 0;
 
     for (let a = 0; a < tries; a++) {
         random = referenceCost + Game.Utilities.getRandomInt(-20, 20) * 5;
@@ -349,7 +351,9 @@ function newItem() {
 
     HTML_IMAGE.src = item.img;
     HTML_NAME.innerHTML = item.dname;
-    HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib;
+    HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib
+        .map((el) => `${el.header}${el.value} ${el.footer}`)
+        .join("<br />");
     HTML_TOOLTIP_LORE.innerHTML = item.lore;
 
     for (let a = BUTTONS.length - 1; a >= 0; a--) {
@@ -362,7 +366,7 @@ function newItem() {
     ITEMS_LEFT_ELEMENT.setValue(ITEMS_LEFT.length + 1);
 }
 
-function shuffle(array) {
+function shuffle(array: unknown[]) {
     let currentIndex = array.length;
     let temporaryValue;
     let randomIndex;
