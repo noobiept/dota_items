@@ -9,9 +9,5 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier"
-    ],
-    "rules": {
-        "no-var": "off",
-        "@typescript-eslint/no-unused-vars": "off"
-    }
+    ]
 }

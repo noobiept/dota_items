@@ -1,28 +1,25 @@
 /**
  * Get data from the `localStorage`.
  */
-export function getData(keys) {
-    var objects = {};
+export function getData(...keys: string[]) {
+    return keys.reduce((data, key) => {
+        const item = localStorage.getItem(key);
+        const value = item && JSON.parse(item);
 
-    for (var a = 0; a < keys.length; a++) {
-        var key = keys[a];
-        var value = localStorage.getItem(key);
-
-        objects[key] = value && JSON.parse(value);
-    }
-
-    return objects;
+        return {
+            ...data,
+            [key]: value,
+        };
+    }, {});
 }
 
 /**
  * Set data into the `localStorage`.
  */
 export function setData(items) {
-    for (var key in items) {
-        if (items.hasOwnProperty(key)) {
-            localStorage.setItem(key, JSON.stringify(items[key]));
-        }
-    }
+    Object.entries(items).forEach(([key, value]) =>
+        localStorage.setItem(key, JSON.stringify(value))
+    );
 }
 
 /**

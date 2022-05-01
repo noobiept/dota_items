@@ -1,11 +1,11 @@
 import { getData, setData } from "./app_storage";
 import { updateHighScore } from "./main";
 
-var HIGH_SCORE = -1; // valid scores are always positive
+let HIGH_SCORE = -1; // valid scores are always positive
 
 export function init() {
-    const data = getData(["dota_items_highscore"]);
-    var score = data["dota_items_highscore"];
+    const data = getData("dota_items_highscore");
+    const score = data["dota_items_highscore"];
 
     if (Game.Utilities.isInteger(score)) {
         HIGH_SCORE = score;

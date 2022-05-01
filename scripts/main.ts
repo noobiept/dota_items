@@ -30,25 +30,25 @@ window.onload = async function () {
  *     // etc
  * }
  */
-var ITEMS;
-var ITEM_NAMES; // a list with all the item names (the key to the 'ITEMS')
+let ITEMS;
+let ITEM_NAMES; // a list with all the item names (the key to the 'ITEMS')
 
-var BUTTONS = [];
-var CURRENT_ITEM;
-var ITEMS_LEFT = [];
-var TIMER;
-var GUESSES_LEFT;
-var MAX_GUESSES = 20;
+let BUTTONS = [];
+let CURRENT_ITEM;
+let ITEMS_LEFT = [];
+let TIMER;
+let GUESSES_LEFT;
+const MAX_GUESSES = 20;
 
-var HIGHSCORE_ELEMENT;
-var GUESSES_LEFT_ELEMENT;
-var ITEMS_LEFT_ELEMENT;
+let HIGH_SCORE_ELEMENT;
+let GUESSES_LEFT_ELEMENT;
+let ITEMS_LEFT_ELEMENT;
 
-var HTML_CONTAINER;
-var HTML_IMAGE;
-var HTML_NAME;
-var HTML_TOOLTIP_ATTRIBUTES;
-var HTML_TOOLTIP_LORE;
+let HTML_CONTAINER;
+let HTML_IMAGE;
+let HTML_NAME;
+let HTML_TOOLTIP_ATTRIBUTES;
+let HTML_TOOLTIP_LORE;
 
 function init(data) {
     loadItemData(data);
@@ -59,59 +59,61 @@ function init(data) {
     HTML_TOOLTIP_ATTRIBUTES = document.getElementById("ItemTooltipAttributes");
     HTML_TOOLTIP_LORE = document.getElementById("ItemTooltipLore");
 
-    var tooltip = document.getElementById("ItemTooltip");
+    const tooltip = document.getElementById("ItemTooltip");
 
     // show the tooltip when the mouse is over the image
-    HTML_IMAGE.addEventListener("mouseover", function (event) {
+    HTML_IMAGE.addEventListener("mouseover", function () {
         tooltip.style.display = "block";
     });
-    HTML_IMAGE.addEventListener("mouseout", function (event) {
+    HTML_IMAGE.addEventListener("mouseout", function () {
         tooltip.style.display = "none";
     });
 
     Message.init();
 
     // initialize the menu
-    var costMenu = new Game.Html.HtmlContainer({ cssId: "CostMenu" });
-    var price1 = new Game.Html.Button({
+    const costMenu = new Game.Html.HtmlContainer({ cssId: "CostMenu" });
+    const price1 = new Game.Html.Button({
         value: 0,
         callback: clicked,
     });
-    var price2 = new Game.Html.Button({
+    const price2 = new Game.Html.Button({
         value: 0,
         callback: clicked,
     });
-    var price3 = new Game.Html.Button({
+    const price3 = new Game.Html.Button({
         value: 0,
         callback: clicked,
     });
     costMenu.addChild(price1, price2, price3);
 
-    var infoMenu = new Game.Html.HtmlContainer({ cssId: "InfoMenu" });
+    const infoMenu = new Game.Html.HtmlContainer({ cssId: "InfoMenu" });
 
-    var guessesLeft = new Game.Html.Value({
+    const guessesLeft = new Game.Html.Value({
         value: 0,
         preText: "Guesses left: ",
     });
-    var itemsLeft = new Game.Html.Value({ value: 0, preText: "Items left: " });
-    var timer = new Game.Html.Value({ value: 0 });
+    const itemsLeft = new Game.Html.Value({
+        value: 0,
+        preText: "Items left: ",
+    });
+    const timer = new Game.Html.Value({ value: 0 });
 
     infoMenu.addChild(guessesLeft, itemsLeft, timer);
 
-    var controlsMenu = new Game.Html.HtmlContainer({ cssId: "ControlsMenu" });
-
-    var restartButton = new Game.Html.Button({
+    const controlsMenu = new Game.Html.HtmlContainer({ cssId: "ControlsMenu" });
+    const restartButton = new Game.Html.Button({
         value: "Restart",
         callback: restart,
     });
-    var highscoreButton = new Game.Html.Value({
+    const highScoreButton = new Game.Html.Value({
         value: "",
         preText: "Best time: ",
     });
 
-    controlsMenu.addChild(restartButton, highscoreButton);
+    controlsMenu.addChild(restartButton, highScoreButton);
 
-    var gameMenu = new Game.Html.HtmlContainer({
+    const gameMenu = new Game.Html.HtmlContainer({
         cssId: "GameMenu",
     });
 
@@ -123,7 +125,7 @@ function init(data) {
 
     TIMER = new Game.Utilities.Timer(timer.container);
     BUTTONS = [price1, price2, price3];
-    HIGHSCORE_ELEMENT = highscoreButton;
+    HIGH_SCORE_ELEMENT = highScoreButton;
     GUESSES_LEFT_ELEMENT = guessesLeft;
     ITEMS_LEFT_ELEMENT = itemsLeft;
 
@@ -135,7 +137,7 @@ function init(data) {
     HTML_CONTAINER.style.display = "block";
 
     // and hide the loading message
-    var loading = document.getElementById("Loading");
+    const loading = document.getElementById("Loading");
     loading.style.display = "none";
 }
 
@@ -143,13 +145,11 @@ function init(data) {
  * Load the item data.
  */
 function loadItemData(data) {
-    var a;
-
     ITEMS = data;
 
     // remove some items that aren't in the standard game
     // and some of the mid-upgrade items (like dagon 2, dagon 3, etc, only show the first and last one)
-    var invalidItems = [
+    const invalidItems = [
         "cheese",
         "aegis",
         "halloween_candy_corn",
@@ -188,26 +188,21 @@ function loadItemData(data) {
         "river_painter6",
         "river_painter7",
     ];
-
-    for (a = 0; a < invalidItems.length; a++) {
-        delete ITEMS[invalidItems[a]];
-    }
+    invalidItems.forEach((item) => delete ITEMS[item]);
 
     ITEM_NAMES = Object.keys(ITEMS);
 
     // update the image links with the complete url
-    for (a = 0; a < ITEM_NAMES.length; a++) {
-        var name = ITEM_NAMES[a];
-        var info = ITEMS[name];
-
+    ITEM_NAMES.forEach((name) => {
+        const info = ITEMS[name];
         info.img = "https://cdn.dota2.com" + info.img;
-    }
+    });
 }
 
 function start() {
     ITEMS_LEFT = ITEM_NAMES.slice();
 
-    updateGuessesleft(MAX_GUESSES);
+    updateGuessesLeft(MAX_GUESSES);
 
     TIMER.start();
     newItem();
@@ -224,8 +219,8 @@ function restart() {
 }
 
 function clicked(button) {
-    var value = button.getValue();
-    var message, ok;
+    const value = button.getValue();
+    let message, ok;
 
     if (value === CURRENT_ITEM.cost) {
         Message.correct();
@@ -241,7 +236,7 @@ function clicked(button) {
 
             ok = new Game.Html.Button({
                 value: "Ok",
-                callback: function (button) {
+                callback: function () {
                     message.clear();
                     restart();
                 },
@@ -255,7 +250,7 @@ function clicked(button) {
             });
         }
     } else {
-        updateGuessesleft(GUESSES_LEFT - 1);
+        updateGuessesLeft(GUESSES_LEFT - 1);
 
         Message.incorrect();
 
@@ -264,7 +259,7 @@ function clicked(button) {
 
             ok = new Game.Html.Button({
                 value: "Ok",
-                callback: function (button) {
+                callback: function () {
                     message.clear();
                     restart();
                 },
@@ -280,11 +275,11 @@ function clicked(button) {
     }
 }
 
-function updateGuessesleft(guesses) {
+function updateGuessesLeft(guesses) {
     GUESSES_LEFT = guesses;
     GUESSES_LEFT_ELEMENT.setValue(guesses);
 
-    var htmlElement = GUESSES_LEFT_ELEMENT.element;
+    const htmlElement = GUESSES_LEFT_ELEMENT.element;
 
     if (guesses <= 1) {
         htmlElement.className = "red";
@@ -296,8 +291,8 @@ function updateGuessesleft(guesses) {
 }
 
 export function updateHighScore() {
-    var bestTime = HighScore.getBestScore();
-    var str;
+    const bestTime = HighScore.getBestScore();
+    let str;
 
     if (bestTime > 0) {
         str = Game.Utilities.timeToString(bestTime);
@@ -305,7 +300,7 @@ export function updateHighScore() {
         str = "---";
     }
 
-    HIGHSCORE_ELEMENT.setValue(str);
+    HIGH_SCORE_ELEMENT.setValue(str);
 }
 
 /**
@@ -318,10 +313,10 @@ function getRandomCost(referenceCost, excludeValues?) {
 
     excludeValues.push(referenceCost);
 
-    var tries = 5;
-    var random;
+    const tries = 5;
+    let random;
 
-    for (var a = 0; a < tries; a++) {
+    for (let a = 0; a < tries; a++) {
         random = referenceCost + Game.Utilities.getRandomInt(-20, 20) * 5;
 
         // see if we already have this value, if so then try again
@@ -341,23 +336,23 @@ function getRandomCost(referenceCost, excludeValues?) {
 }
 
 function newItem() {
-    var index = Game.Utilities.getRandomInt(0, ITEMS_LEFT.length - 1);
-    var randomName = ITEMS_LEFT.splice(index, 1)[0];
+    const index = Game.Utilities.getRandomInt(0, ITEMS_LEFT.length - 1);
+    const randomName = ITEMS_LEFT.splice(index, 1)[0];
 
-    var item = ITEMS[randomName];
+    const item = ITEMS[randomName];
 
-    var rightCost = item.cost;
-    var cost2 = getRandomCost(rightCost);
-    var cost3 = getRandomCost(rightCost, [cost2]);
+    const rightCost = item.cost;
+    const cost2 = getRandomCost(rightCost);
+    const cost3 = getRandomCost(rightCost, [cost2]);
 
-    var values = shuffle([rightCost, cost2, cost3]);
+    const values = shuffle([rightCost, cost2, cost3]);
 
     HTML_IMAGE.src = item.img;
     HTML_NAME.innerHTML = item.dname;
     HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib;
     HTML_TOOLTIP_LORE.innerHTML = item.lore;
 
-    for (var a = BUTTONS.length - 1; a >= 0; a--) {
+    for (let a = BUTTONS.length - 1; a >= 0; a--) {
         BUTTONS[a].setValue(values[a]);
     }
 
@@ -368,9 +363,9 @@ function newItem() {
 }
 
 function shuffle(array) {
-    var currentIndex = array.length;
-    var temporaryValue;
-    var randomIndex;
+    let currentIndex = array.length;
+    let temporaryValue;
+    let randomIndex;
 
     // while there's still elements to shuffle
     while (currentIndex !== 0) {

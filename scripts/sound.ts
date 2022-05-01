@@ -1,4 +1,4 @@
-var CORRECT_SOUND; // plays a sound whenever a correct guess is made
+let CORRECT_SOUND; // plays a sound whenever a correct guess is made
 
 export function init() {
     CORRECT_SOUND = new Audio("./sounds/coins.mp3");

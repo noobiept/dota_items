@@ -7,7 +7,8 @@ Guess the correct price off the dota items, to win the game. Inspired by the "sh
 # Commands
 
 -   `npm install` - install the dependencies.
--   `npm run build` - start the release build.
+-   `npm start` - start the development build and run a local server.
+-   `npm run build` - Run the release build.
 
 # Attribution
 

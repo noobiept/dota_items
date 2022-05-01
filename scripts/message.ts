@@ -1,5 +1,5 @@
-var ELEMENT;
-var TIMEOUT_ID = null;
+let ELEMENT;
+let TIMEOUT_ID = null;
 
 export function init() {
     ELEMENT = document.querySelector("#Message");
