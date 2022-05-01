@@ -2,8 +2,6 @@
     "compilerOptions": {
         "outDir": "./dist/",
         "target": "ES2021",
-        "typeRoots": [
-            "./libraries"
-        ]
+        "typeRoots": ["./libraries"]
     }
 }

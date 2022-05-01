@@ -2,14 +2,14 @@
     "env": {
         "browser": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "prettier"],
     "rules": {
-        "linebreak-style": [ "error", "windows" ],
-        "semi": [ "error", "always" ],
-        "no-unused-vars": [ "error", { "args": "none" } ],
-        "consistent-return": [ "error" ],
-        "curly": [ "error" ],
-        "eqeqeq": [ "error" ],
-        "strict": [ "error", "global" ]
+        "linebreak-style": ["error", "windows"],
+        "semi": ["error", "always"],
+        "no-unused-vars": ["error", { "args": "none" }],
+        "consistent-return": ["error"],
+        "curly": ["error"],
+        "eqeqeq": ["error"],
+        "strict": ["error", "global"]
     }
 }

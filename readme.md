@@ -1,18 +1,18 @@
-# [Try it out here!](https://nbpt.eu/games/dota_items) #
+# [Try it out here!](https://nbpt.eu/games/dota_items)
 
 Guess the correct price off the dota items, to win the game. Inspired by the "shopkeeper's quiz" game.
 
 ![Game Image](images/promotion/promotion1.png "Game Image")
 
-# Commands #
+# Commands
 
-- `npm install` - install the dependencies.
-- `npm run build` - start the release build.
+-   `npm install` - install the dependencies.
+-   `npm run build` - start the release build.
 
-# Attribution #
+# Attribution
 
-- Sounds/images are part of the game [dota2](https://www.dota2.com/).
+-   Sounds/images are part of the game [dota2](https://www.dota2.com/).
 
-# Libraries #
+# Libraries
 
-- [game engine](https://bitbucket.org/drk4/game_engine) v1.2.1
+-   [game engine](https://bitbucket.org/drk4/game_engine) v1.2.1

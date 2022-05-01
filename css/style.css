@@ -1,114 +1,98 @@
-    /* ---- Basic elements ---- */
+/* ---- Basic elements ---- */
 
-body
-    {
+body {
     margin: 0;
     text-align: center;
     background-color: black;
-    color: #CCC;
+    color: #ccc;
     font-family: helvetica, arial sans-serif;
     font-size: 24px;
-    }
+}
 
+/* ---- Generic classes ---- */
 
-    /* ---- Generic classes ---- */
-
-#InfoMenu .Game-Value span:last-child.red, .red
-    {
+#InfoMenu .Game-Value span:last-child.red,
+.red {
     color: red;
-    }
+}
 
-#InfoMenu .Game-Value span:last-child.yellow, .yellow
-    {
+#InfoMenu .Game-Value span:last-child.yellow,
+.yellow {
     color: yellow;
-    }
+}
 
+/* ---- Game Container ---- */
 
-    /* ---- Game Container ---- */
-
-#GameContainer
-    {
-    background: url('../images/background.png') top no-repeat;
+#GameContainer {
+    background: url("../images/background.png") top no-repeat;
     width: 664px;
     height: 362px;
     margin: auto;
     position: relative;
     display: none;
-    }
+}
 
+/* ---- Item ---- */
 
-    /* ---- Item ---- */
-
-#ItemContainer
-    {
+#ItemContainer {
     padding-top: 25px;
     padding-bottom: 15px;
-    }
+}
 
-#ItemImage
-    {
+#ItemImage {
     width: 85px;
     height: 64px;
-    }
+}
 
-#ItemTooltip
-    {
+#ItemTooltip {
     display: none;
     position: absolute;
     width: 100%;
     background: linear-gradient(rgb(50, 50, 50), black);
     padding: 10px 0;
     z-index: 10;
-    }
+}
 
-#ItemTooltipAttributes
-    {
+#ItemTooltipAttributes {
     color: gold;
     font-size: 16px;
-    }
+}
 
-    /* ---- Menu ---- */
+/* ---- Menu ---- */
 
-.Game-Button
-    {
+.Game-Button {
     display: inline-block;
     cursor: pointer;
-    color: #8F3C2E;
+    color: #8f3c2e;
     margin: 2px 5px;
-    }
+}
 
-.Game-Button:hover
-    {
+.Game-Button:hover {
     text-decoration: underline;
-    }
+}
 
-#CostMenu > *, #InfoMenu > *
-    {
+#CostMenu > *,
+#InfoMenu > * {
     display: inline-block;
     margin: 2px 10px;
-    }
+}
 
-#InfoMenu
-    {
+#InfoMenu {
     padding-top: 40px;
-    }
+}
 
-#ControlsMenu
-    {
+#ControlsMenu {
     padding-top: 37px;
-    }
+}
 
-#InfoMenu .Game-Value span:last-child
-    {
+#InfoMenu .Game-Value span:last-child {
     font-weight: bold;
     color: #978989;
-    }
+}
 
+/* ---- Message/Dialog ---- */
 
-    /* ---- Message/Dialog ---- */
-
-.Game-Message-container
-    {
+.Game-Message-container {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -116,66 +100,58 @@ body
     padding: 10px;
     background-color: #2a2d30;
     border: 8px solid;
-    border-image: url('../images/border.png') 15 15 round;
+    border-image: url("../images/border.png") 15 15 round;
     min-width: 200px;
     color: #bcbcbc;
-    }
+}
 
-.Game-Message-container .Game-Button
-    {
+.Game-Message-container .Game-Button {
     background-color: #444;
     border: 1px solid #555;
     color: #bcbcbc;
     padding: 5px 20px;
-    }
+}
 
-.Game-Message-container .Game-Button:hover
-    {
+.Game-Message-container .Game-Button:hover {
     background-color: #555;
     text-decoration: none;
-    }
+}
 
-.Game-Message-Components
-    {
+.Game-Message-Components {
     margin-top: 10px;
     text-align: center;
-    }
+}
 
-.Game-Message-Components > *
-    {
+.Game-Message-Components > * {
     display: inline-block;
     padding: 2px 5px;
     margin: 0 5px;
-    }
+}
 
-.Game-Message-background
-    {
+.Game-Message-background {
     position: absolute;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.2);
     width: 100%;
     height: 100%;
-    }
-
+}
 
 /* ----- Message ----- */
 
-#Message
-    {
+#Message {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     transition: opacity 0.2s;
-    }
+}
 
-#Loading
-    {
+#Loading {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: #CCC;
+    color: #ccc;
     font-size: 130%;
-    }
+}
