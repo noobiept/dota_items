@@ -26,12 +26,8 @@ export function setData(items) {
 }
 
 /**
- * Uses the `chrome storage` if it's available (when running as a chrome app), otherwise uses the `localStorage`.
+ * Remove some keys from `localStorage`.
  */
-export function removeData(items) {
-    for (var key in items) {
-        if (items.hasOwnProperty(key)) {
-            localStorage.removeItem(key);
-        }
-    }
+export function removeData(...keys: string[]) {
+    keys.forEach((key) => localStorage.removeItem(key));
 }
