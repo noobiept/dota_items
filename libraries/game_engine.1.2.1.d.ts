@@ -403,7 +403,7 @@ declare module Game {
         class HtmlContainer extends HtmlElement {
             _children: HtmlElement[];
             constructor(args?: HtmlContainerArgs);
-            addChild(args: any): void;
+            addChild(...args: any[]): void;
             removeChild(args: any): void;
             removeAllChildren(): void;
             clear(): void;

@@ -1,42 +1,36 @@
-'use strict';
-
-var Message;
-(function(Message) {
-
-
 var ELEMENT;
 var TIMEOUT_ID = null;
 
 
-Message.init = function()
+export function init()
 {
 ELEMENT = document.querySelector( '#Message' );
 };
 
 
-Message.show = function( text )
+export function show( text )
 {
-Message.stopPrevious();
+stopPrevious();
 
 ELEMENT.innerHTML = text;
 ELEMENT.style.opacity = 1;
 
 TIMEOUT_ID = window.setTimeout( function()
     {
-    Message.hide();
+    hide();
     }, 500 );
 };
 
 
-Message.hide = function()
+function hide()
 {
-Message.stopPrevious();
+stopPrevious();
 
 ELEMENT.style.opacity = 0;
 };
 
 
-Message.stopPrevious = function()
+function stopPrevious()
 {
 if ( TIMEOUT_ID !== null )
     {
@@ -47,18 +41,16 @@ if ( TIMEOUT_ID !== null )
 };
 
 
-Message.correct = function()
+export function correct()
 {
 ELEMENT.className = 'yellow';
-Message.show( 'Correct!' );
+show( 'Correct!' );
 };
 
 
-Message.incorrect = function()
+export function incorrect()
 {
 ELEMENT.className = 'red';
-Message.show( 'Incorrect!' );
+show( 'Incorrect!' );
 };
 
-
-})(Message || (Message = {}));

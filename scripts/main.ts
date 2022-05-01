@@ -1,7 +1,6 @@
-/*global Game, Message, HighScore, Sound*/
-/*exported loadItemData*/
-'use strict';
-
+import * as HighScore from './high_score';
+import * as Message from './message'
+import * as Sound from './sound'
 
 window.onload = async function()
 {
@@ -9,12 +8,10 @@ window.onload = async function()
         "https://raw.githubusercontent.com/odota/dotaconstants/master/build/items.json"
     );
     const data = await response.json();
-    Main.init(data)
+    init(data)
 };
 
 
-var Main;
-(function(Main) {
 
 /**
  * items = {
@@ -57,9 +54,9 @@ var HTML_TOOLTIP_ATTRIBUTES;
 var HTML_TOOLTIP_LORE;
 
 
-Main.init = function( data )
+function init( data )
 {
-Main.loadItemData( data );
+loadItemData( data );
 
 HTML_CONTAINER = document.querySelector( '#GameContainer' );
 HTML_IMAGE = HTML_CONTAINER.querySelector( '#ItemImage' );
@@ -110,13 +107,13 @@ infoMenu.addChild( guessesLeft, itemsLeft, timer );
 
 var controlsMenu = new Game.Html.HtmlContainer({ cssId: 'ControlsMenu' });
 
-var restart = new Game.Html.Button({
+var restartButton = new Game.Html.Button({
         value: 'Restart',
-        callback: Main.restart
+        callback: restart
     });
-var highscore = new Game.Html.Value({ value: '', preText: 'Best time: ' });
+var highscoreButton = new Game.Html.Value({ value: '', preText: 'Best time: ' });
 
-controlsMenu.addChild( restart, highscore );
+controlsMenu.addChild( restartButton, highscoreButton );
 
 var gameMenu = new Game.Html.HtmlContainer({
         cssId: 'GameMenu'
@@ -132,13 +129,13 @@ HTML_CONTAINER.appendChild( gameMenu.container );
 
 TIMER = new Game.Utilities.Timer( timer.container );
 BUTTONS = [ price1, price2, price3 ];
-HIGHSCORE_ELEMENT = highscore;
+HIGHSCORE_ELEMENT = highscoreButton;
 GUESSES_LEFT_ELEMENT = guessesLeft;
 ITEMS_LEFT_ELEMENT = itemsLeft;
 
 Sound.init();
 HighScore.init();
-Main.start();
+start();
 
     // show the game after the load
 HTML_CONTAINER.style.display = 'block';
@@ -152,7 +149,7 @@ loading.style.display = 'none';
 /**
  * Load the item data.
  */
-Main.loadItemData = function( data )
+function loadItemData( data )
 {
 var a;
 
@@ -180,7 +177,7 @@ for (a = 0 ; a < ITEM_NAMES.length ; a++)
 };
 
 
-Main.start = function()
+function start()
 {
 ITEMS_LEFT = ITEM_NAMES.slice();
 
@@ -191,17 +188,17 @@ newItem();
 };
 
 
-Main.clear = function()
+function clear()
 {
 TIMER.reset();
 ITEMS_LEFT.length = 0;
 };
 
 
-Main.restart = function()
+function restart()
 {
-Main.clear();
-Main.start();
+clear();
+start();
 };
 
 
@@ -225,14 +222,14 @@ if ( value === CURRENT_ITEM.cost )
         TIMER.stop();
 
         HighScore.add( TIMER.getTimeMilliseconds() );
-        Main.updateHighScore();
+        updateHighScore();
 
         ok = new Game.Html.Button({
                 value: 'Ok',
                 callback: function( button )
                     {
                     message.clear();
-                    Main.restart();
+                    restart();
                     }
             });
 
@@ -260,7 +257,7 @@ else
                 callback: function( button )
                     {
                     message.clear();
-                    Main.restart();
+                    restart();
                     }
             });
 
@@ -299,7 +296,7 @@ else
 }
 
 
-Main.updateHighScore = function()
+export function updateHighScore()
 {
 var bestTime = HighScore.getBestScore();
 var str;
@@ -322,7 +319,7 @@ HIGHSCORE_ELEMENT.setValue( str );
 /**
  * Get a random value around the reference cost, and try not to get a repeated value.
  */
-function getRandomCost( referenceCost, excludeValues )
+function getRandomCost( referenceCost, excludeValues? )
 {
 if ( typeof excludeValues === 'undefined' )
     {
@@ -410,6 +407,3 @@ while( currentIndex !== 0 )
 
 return array;
 }
-
-
-})(Main || (Main = {}));
