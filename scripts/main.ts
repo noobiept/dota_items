@@ -1,13 +1,11 @@
+import { cleanData, fetchData } from "./data";
 import * as HighScore from "./high_score";
 import * as Message from "./message";
 import * as Sound from "./sound";
 import { ItemData, ItemsDataDict } from "./types";
 
 window.onload = async function () {
-    const response = await fetch(
-        "https://raw.githubusercontent.com/odota/dotaconstants/master/build/items.json"
-    );
-    const data = await response.json();
+    const data = await fetchData();
     init(data);
 };
 
@@ -146,51 +144,7 @@ function init(data: ItemsDataDict) {
  * Load the item data.
  */
 function loadItemData(data: ItemsDataDict) {
-    ITEMS = data;
-
-    // remove some items that aren't in the standard game
-    // and some of the mid-upgrade items (like dagon 2, dagon 3, etc, only show the first and last one)
-    const invalidItems = [
-        "cheese",
-        "aegis",
-        "halloween_candy_corn",
-        "mystery_hook",
-        "mystery_arrow",
-        "mystery_missile",
-        "mystery_toss",
-        "mystery_vacuum",
-        "halloween_rapier",
-        "greevil_whistle",
-        "greevil_whistle_toggle",
-        "present",
-        "winter_stocking",
-        "winter_skates",
-        "winter_cake",
-        "winter_cookie",
-        "winter_coco",
-        "winter_ham",
-        "winter_kringle",
-        "winter_mushroom",
-        "winter_greevil_treat",
-        "winter_greevil_garbage",
-        "winter_greevil_chewy",
-        "dagon_2",
-        "dagon_3",
-        "dagon_4",
-        "necronomicon_2",
-        "ward_dispenser",
-        "tango_single",
-        "banana",
-        "river_painter",
-        "river_painter2",
-        "river_painter3",
-        "river_painter4",
-        "river_painter5",
-        "river_painter6",
-        "river_painter7",
-    ];
-    invalidItems.forEach((item) => delete ITEMS[item]);
-
+    ITEMS = cleanData(data);
     ITEM_NAMES = Object.keys(ITEMS);
 
     // update the image links with the complete url
