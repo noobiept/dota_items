@@ -1,3 +1,5 @@
+import { shuffle } from "@drk4/utilities";
+import { IMAGE_CDN_URL } from "./constants";
 import { cleanData, fetchData } from "./data";
 import * as HighScore from "./high_score";
 import * as Message from "./message";
@@ -130,6 +132,7 @@ function init(data: ItemsDataDict) {
 
     Sound.init();
     HighScore.init();
+    updateHighScore();
     start();
 
     // show the game after the load
@@ -150,7 +153,7 @@ function loadItemData(data: ItemsDataDict) {
     // update the image links with the complete url
     ITEM_NAMES.forEach((name) => {
         const info = ITEMS[name];
-        info.img = "https://cdn.dota2.com" + info.img;
+        info.img = IMAGE_CDN_URL + info.img;
     });
 }
 
@@ -318,24 +321,4 @@ function newItem() {
 
     // +1 since we removed the new item from the array above
     ITEMS_LEFT_ELEMENT.setValue(ITEMS_LEFT.length + 1);
-}
-
-function shuffle(array: unknown[]) {
-    let currentIndex = array.length;
-    let temporaryValue;
-    let randomIndex;
-
-    // while there's still elements to shuffle
-    while (currentIndex !== 0) {
-        // pick a remaining element
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        // swap it with the current element
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
 }

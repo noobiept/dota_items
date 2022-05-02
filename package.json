@@ -1,6 +1,9 @@
 {
     "name": "dota_items",
     "version": "2.0.0",
+    "dependencies": {
+        "@drk4/utilities": "^5.1.0"
+    },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.21.0",
         "@typescript-eslint/parser": "^5.21.0",

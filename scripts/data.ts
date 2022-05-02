@@ -1,9 +1,8 @@
+import { ITEMS_DATA_URL } from "./constants";
 import { ItemsDataDict } from "./types";
 
 export async function fetchData() {
-    const response = await fetch(
-        "https://raw.githubusercontent.com/odota/dotaconstants/master/build/items.json"
-    );
+    const response = await fetch(ITEMS_DATA_URL);
     const data = await response.json();
     return data;
 }
