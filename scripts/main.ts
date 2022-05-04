@@ -50,6 +50,7 @@ let HTML_IMAGE: HTMLImageElement;
 let HTML_NAME: HTMLElement;
 let HTML_TOOLTIP_ATTRIBUTES: HTMLElement;
 let HTML_TOOLTIP_LORE: HTMLElement;
+let HTML_IMAGE_LOADING: HTMLElement;
 
 function init(data: ItemsDataDict) {
     loadItemData(data);
@@ -59,6 +60,9 @@ function init(data: ItemsDataDict) {
     HTML_NAME = HTML_CONTAINER.querySelector("#ItemName")!;
     HTML_TOOLTIP_ATTRIBUTES = document.getElementById("ItemTooltipAttributes")!;
     HTML_TOOLTIP_LORE = document.getElementById("ItemTooltipLore")!;
+    HTML_IMAGE_LOADING = document.querySelector(
+        "#ItemImageContainer .loadingAnimation"
+    )!;
 
     const tooltip = document.getElementById("ItemTooltip")!;
 
@@ -68,6 +72,9 @@ function init(data: ItemsDataDict) {
     });
     HTML_IMAGE.addEventListener("mouseout", function () {
         tooltip.style.display = "none";
+    });
+    HTML_IMAGE.addEventListener("load", () => {
+        HTML_IMAGE_LOADING.classList.add("hidden");
     });
 
     Message.init();
@@ -306,6 +313,7 @@ function newItem() {
 
     const values = shuffle([rightCost, cost2, cost3]);
 
+    HTML_IMAGE_LOADING.classList.remove("hidden");
     HTML_IMAGE.src = item.img;
     HTML_NAME.innerHTML = item.dname;
     HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib

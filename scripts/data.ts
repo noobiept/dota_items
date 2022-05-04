@@ -16,6 +16,7 @@ export function cleanData(data: ItemsDataDict): ItemsDataDict {
         "cheese",
         "aegis",
         "courier",
+        "grandmasters_glaive",
         "flying_courier",
         "ward_dispenser",
         "dagon_2",
