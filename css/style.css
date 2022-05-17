@@ -36,6 +36,12 @@ body {
     display: none;
 }
 
+#GameTimer {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
 /* ---- Item ---- */
 
 #ItemContainer {

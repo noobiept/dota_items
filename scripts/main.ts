@@ -1,4 +1,4 @@
-import { shuffle } from "@drk4/utilities";
+import { shuffle, Timer } from "@drk4/utilities";
 import { IMAGE_CDN_URL } from "./constants";
 import { cleanData, fetchData } from "./data";
 import * as HighScore from "./high_score";
@@ -37,7 +37,7 @@ let ITEM_NAMES: string[]; // a list with all the item names (the key to the 'ITE
 let BUTTONS: Game.Html.Button[] = [];
 let CURRENT_ITEM: ItemData | undefined;
 let ITEMS_LEFT: string[] = [];
-let TIMER: Game.Utilities.Timer;
+let TIMER: Timer;
 let GUESSES_LEFT: number;
 const MAX_GUESSES = 20;
 
@@ -105,9 +105,8 @@ function init(data: ItemsDataDict) {
         value: 0,
         preText: "Items left: ",
     });
-    const timer = new Game.Html.Value({ value: 0 });
 
-    infoMenu.addChild(guessesLeft, itemsLeft, timer);
+    infoMenu.addChild(guessesLeft, itemsLeft);
 
     const controlsMenu = new Game.Html.HtmlContainer({ cssId: "ControlsMenu" });
     const restartButton = new Game.Html.Button({
@@ -131,7 +130,15 @@ function init(data: ItemsDataDict) {
 
     HTML_CONTAINER.appendChild(gameMenu.container);
 
-    TIMER = new Game.Utilities.Timer(timer.container);
+    const timerElement = document.getElementById("GameTimer")!;
+    TIMER = new Timer({
+        updateElement: {
+            element: timerElement,
+            format: {
+                format: "partial_daytime",
+            },
+        },
+    });
     BUTTONS = [price1, price2, price3];
     HIGH_SCORE_ELEMENT = highScoreButton;
     GUESSES_LEFT_ELEMENT = guessesLeft;
@@ -169,7 +176,9 @@ function start() {
 
     updateGuessesLeft(MAX_GUESSES);
 
-    TIMER.start();
+    TIMER.start({
+        startValue: 0,
+    });
     newItem();
 }
 
