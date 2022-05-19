@@ -2,7 +2,7 @@
 
 Guess the correct price off the dota items, to win the game. Inspired by the "shopkeeper's quiz" game.
 
-![Game Image](images/promotion/promotion1.png "Game Image")
+![Game Image](images/promotion/screenshot.png "Game Image")
 
 # Commands
 
