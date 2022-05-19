@@ -1,14 +1,15 @@
 import { shuffle, Timer } from "@drk4/utilities";
 import { IMAGE_CDN_URL } from "./constants";
-import { cleanData, fetchData } from "./data";
+import { cleanData } from "./data";
 import * as HighScore from "./high_score";
+import { loadData } from "./loading_status";
 import * as Message from "./message";
 import * as Sound from "./sound";
 import { ItemData, ItemsDataDict } from "./types";
 
-window.onload = async function () {
-    const data = await fetchData();
-    init(data);
+window.onload = () => {
+    const status = document.getElementById("LoadingStatus")!;
+    loadData(status, init);
 };
 
 /**
@@ -151,10 +152,6 @@ function init(data: ItemsDataDict) {
 
     // show the game after the load
     HTML_CONTAINER.style.display = "block";
-
-    // and hide the loading message
-    const loading = document.getElementById("Loading")!;
-    loading.style.display = "none";
 }
 
 /**

@@ -188,7 +188,7 @@ body {
     transition: opacity 0.2s;
 }
 
-#Loading {
+#LoadingStatus {
     position: absolute;
     left: 50%;
     top: 50%;
