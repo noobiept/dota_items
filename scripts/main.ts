@@ -6,32 +6,13 @@ import { loadData } from "./loading_status";
 import * as Message from "./message";
 import * as Sound from "./sound";
 import { ItemData, ItemsDataDict } from "./types";
+import { getRandomCost } from "./utilities";
 
 window.onload = () => {
     const status = document.getElementById("LoadingStatus")!;
     loadData(status, init);
 };
 
-/**
- * items = {
- *     "item_name": {
- *         "id": number,
- *         "img": str,  // file name, need to prepend the base url
- *         "dname": str,    // display name
- *         "qual": str,
- *         "cost": number,
- *         "desc": str,     // item description
- *         "notes": str,    // also item description
- *         "attrib": str,
- *         "mc": boolean,
- *         "cd": number,    // cooldown
- *         "lore": str,
- *         "components": string[],  // array of the item names, or null
- *         "created": boolean
- *     },
- *     // etc
- * }
- */
 let ITEMS: ItemsDataDict;
 let ITEM_NAMES: string[]; // a list with all the item names (the key to the 'ITEMS')
 
@@ -273,38 +254,6 @@ export function updateHighScore() {
     }
 
     HIGH_SCORE_ELEMENT.setValue(str);
-}
-
-/**
- * Get a random value around the reference cost, and try not to get a repeated value.
- */
-function getRandomCost(referenceCost: number, excludeValues?: number[]) {
-    if (typeof excludeValues === "undefined") {
-        excludeValues = [];
-    }
-
-    excludeValues.push(referenceCost);
-
-    const tries = 5;
-    let random = 0;
-
-    for (let a = 0; a < tries; a++) {
-        random = referenceCost + Game.Utilities.getRandomInt(-20, 20) * 5;
-
-        // see if we already have this value, if so then try again
-        // otherwise we got what we came here for
-        if (random >= 0 && excludeValues.indexOf(random) < 0) {
-            return random;
-        }
-    }
-
-    // don't allow negative numbers
-    if (random < 0) {
-        random = 0;
-    }
-
-    // no more tries left, just return the last value
-    return random;
 }
 
 function newItem() {
