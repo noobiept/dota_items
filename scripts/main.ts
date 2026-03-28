@@ -43,7 +43,7 @@ function init(data: ItemsDataDict) {
     HTML_TOOLTIP_ATTRIBUTES = document.getElementById("ItemTooltipAttributes")!;
     HTML_TOOLTIP_LORE = document.getElementById("ItemTooltipLore")!;
     HTML_IMAGE_LOADING = document.querySelector(
-        "#ItemImageContainer .loadingAnimation"
+        "#ItemImageContainer .loadingAnimation",
     )!;
 
     const tooltip = document.getElementById("ItemTooltip")!;

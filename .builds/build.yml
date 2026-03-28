@@ -1,0 +1,13 @@
+image: alpine/edge
+sources:
+    - https://git.sr.ht/~pedruu/dota_items
+tasks:
+    - check: |
+          cd dota_items
+          pnpm install
+          pnpm run format:check
+          pnpm run lint
+          pnpm run build
+packages:
+    - nodejs
+    - pnpm

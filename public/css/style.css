@@ -5,7 +5,9 @@ body {
     text-align: center;
     background-color: black;
     color: #ccc;
-    font-family: helvetica, arial sans-serif;
+    font-family:
+        helvetica,
+        arial sans-serif;
     font-size: 24px;
 }
 

@@ -22,7 +22,7 @@ export function getData(...keys: string[]): DataObject {
  */
 export function setData(items: DataObject) {
     Object.entries(items).forEach(([key, value]) =>
-        localStorage.setItem(key, JSON.stringify(value))
+        localStorage.setItem(key, JSON.stringify(value)),
     );
 }
 

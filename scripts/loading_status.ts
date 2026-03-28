@@ -3,7 +3,7 @@ import { ItemsDataDict } from "./types";
 
 export async function loadData(
     status: HTMLElement,
-    callback: (data: ItemsDataDict) => void
+    callback: (data: ItemsDataDict) => void,
 ) {
     status.textContent = "Loading...";
 
