@@ -4,8 +4,7 @@
         "module": "ESNext",
         "moduleResolution": "bundler",
         "strict": true,
-        "skipLibCheck": true,
-        "typeRoots": ["./libraries"]
+        "skipLibCheck": true
     },
-    "include": ["scripts"]
+    "include": ["scripts", "public/libraries/**/*.d.ts"]
 }
