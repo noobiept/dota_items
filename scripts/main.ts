@@ -256,12 +256,24 @@ export function updateHighScore() {
     HIGH_SCORE_ELEMENT.setValue(str);
 }
 
+function formatAbility(attribute: ItemData["attrib"][number]) {
+    const { key, display, value } = attribute;
+
+    if (display) {
+        return display.replace("{value}", value);
+    }
+
+    const label = key
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+    return `${label}: ${value}`;
+}
+
 function newItem() {
     const index = Game.Utilities.getRandomInt(0, ITEMS_LEFT.length - 1);
     const randomName = ITEMS_LEFT.splice(index, 1)[0];
 
     const item = ITEMS[randomName];
-
     const rightCost = item.cost;
     const cost2 = getRandomCost(rightCost);
     const cost3 = getRandomCost(rightCost, [cost2]);
@@ -272,7 +284,7 @@ function newItem() {
     HTML_IMAGE.src = item.img;
     HTML_NAME.innerHTML = item.dname;
     HTML_TOOLTIP_ATTRIBUTES.innerHTML = item.attrib
-        .map((el) => `${el.header}${el.value} ${el.footer}`)
+        .map((el) => formatAbility(el))
         .join("<br />");
     HTML_TOOLTIP_LORE.innerHTML = item.lore;
 

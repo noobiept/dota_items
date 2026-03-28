@@ -15,9 +15,8 @@ export type ItemData = {
     notes: string;
     attrib: {
         key: string;
-        header: string;
+        display?: string;
         value: string;
-        footer: string;
     }[];
     mc: number | false;
     cd: number | false;
