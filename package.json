@@ -1,6 +1,7 @@
 {
     "name": "dota_items",
     "version": "2.1.0",
+    "type": "module",
     "packageManager": "pnpm@10.33.0",
     "dependencies": {
         "@drk4/utilities": "^6.3.2"
