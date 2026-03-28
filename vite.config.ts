@@ -3,7 +3,7 @@ import { resolve } from "path";
 import { name, version } from "./package.json";
 
 export default defineConfig({
-    root: ".",
+    base: "",
     build: {
         outDir: resolve(__dirname, "release", `${name}_${version}`),
         emptyOutDir: true,
