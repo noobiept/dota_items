@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
         "target": "ES2021",
-        "module": "ES2020",
-        "typeRoots": ["./libraries"],
-        "moduleResolution": "Node",
-        "strict": true
-    }
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "strict": true,
+        "skipLibCheck": true,
+        "typeRoots": ["./libraries"]
+    },
+    "include": ["scripts"]
 }
