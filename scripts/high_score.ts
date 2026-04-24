@@ -1,3 +1,4 @@
+import { Utilities } from "@drk4/game-engine";
 import { getData, setData } from "./app_storage";
 
 let HIGH_SCORE = -1; // valid scores are always positive
@@ -7,7 +8,7 @@ export function init() {
     const data = getData(HIGH_SCORE_STORE_KEY);
     const score = data[HIGH_SCORE_STORE_KEY] as number;
 
-    if (Game.Utilities.isInteger(score)) {
+    if (Utilities.isInteger(score)) {
         HIGH_SCORE = score;
     }
 }

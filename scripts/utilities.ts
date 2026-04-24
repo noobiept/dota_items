@@ -1,3 +1,5 @@
+import { Utilities } from "@drk4/game-engine";
+
 /**
  * Get a random value around the reference cost, and try not to get a repeated value.
  */
@@ -12,7 +14,7 @@ export function getRandomCost(referenceCost: number, excludeValues?: number[]) {
     let random = 0;
 
     for (let a = 0; a < tries; a++) {
-        random = referenceCost + Game.Utilities.getRandomInt(-20, 20) * 5;
+        random = referenceCost + Utilities.getRandomInt(-20, 20) * 5;
 
         // see if we already have this value, if so then try again
         // otherwise we got what we came here for

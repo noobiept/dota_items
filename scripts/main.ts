@@ -1,3 +1,4 @@
+import { Html, Message as GameMessage, Utilities } from "@drk4/game-engine";
 import { shuffle, Timer } from "@drk4/utilities";
 import { IMAGE_CDN_URL } from "./constants";
 import { cleanData } from "./data";
@@ -16,16 +17,16 @@ window.onload = () => {
 let ITEMS: ItemsDataDict;
 let ITEM_NAMES: string[]; // a list with all the item names (the key to the 'ITEMS')
 
-let BUTTONS: Game.Html.Button[] = [];
+let BUTTONS: Html.Button[] = [];
 let CURRENT_ITEM: ItemData | undefined;
 let ITEMS_LEFT: string[] = [];
 let TIMER: Timer;
 let GUESSES_LEFT: number;
 const MAX_GUESSES = 20;
 
-let HIGH_SCORE_ELEMENT: Game.Html.Value;
-let GUESSES_LEFT_ELEMENT: Game.Html.Value;
-let ITEMS_LEFT_ELEMENT: Game.Html.Value;
+let HIGH_SCORE_ELEMENT: Html.Value;
+let GUESSES_LEFT_ELEMENT: Html.Value;
+let ITEMS_LEFT_ELEMENT: Html.Value;
 
 let HTML_CONTAINER: HTMLElement;
 let HTML_IMAGE: HTMLImageElement;
@@ -62,55 +63,55 @@ function init(data: ItemsDataDict) {
     Message.init();
 
     // initialize the menu
-    const costMenu = new Game.Html.HtmlContainer({ cssId: "CostMenu" });
-    const price1 = new Game.Html.Button({
+    const costMenu = new Html.HtmlContainer({ cssId: "CostMenu" });
+    const price1 = new Html.Button({
         value: 0,
         callback: clicked,
     });
-    const price2 = new Game.Html.Button({
+    const price2 = new Html.Button({
         value: 0,
         callback: clicked,
     });
-    const price3 = new Game.Html.Button({
+    const price3 = new Html.Button({
         value: 0,
         callback: clicked,
     });
     costMenu.addChild(price1, price2, price3);
 
-    const infoMenu = new Game.Html.HtmlContainer({ cssId: "InfoMenu" });
+    const infoMenu = new Html.HtmlContainer({ cssId: "InfoMenu" });
 
-    const guessesLeft = new Game.Html.Value({
+    const guessesLeft = new Html.Value({
         value: 0,
         preText: "Guesses left: ",
     });
-    const itemsLeft = new Game.Html.Value({
+    const itemsLeft = new Html.Value({
         value: 0,
         preText: "Items left: ",
     });
 
     infoMenu.addChild(guessesLeft, itemsLeft);
 
-    const controlsMenu = new Game.Html.HtmlContainer({ cssId: "ControlsMenu" });
-    const restartButton = new Game.Html.Button({
+    const controlsMenu = new Html.HtmlContainer({ cssId: "ControlsMenu" });
+    const restartButton = new Html.Button({
         value: "Restart",
         callback: restart,
     });
-    const highScoreButton = new Game.Html.Value({
+    const highScoreButton = new Html.Value({
         value: "",
         preText: "Best time: ",
     });
 
     controlsMenu.addChild(restartButton, highScoreButton);
 
-    const gameMenu = new Game.Html.HtmlContainer({
+    const gameMenu = new Html.HtmlContainer({
         cssId: "GameMenu",
     });
 
-    gameMenu.container.appendChild(costMenu.container);
-    gameMenu.container.appendChild(infoMenu.container);
-    gameMenu.container.appendChild(controlsMenu.container);
+    gameMenu.container!.appendChild(costMenu.container!);
+    gameMenu.container!.appendChild(infoMenu.container!);
+    gameMenu.container!.appendChild(controlsMenu.container!);
 
-    HTML_CONTAINER.appendChild(gameMenu.container);
+    HTML_CONTAINER.appendChild(gameMenu.container!);
 
     const timerElement = document.getElementById("GameTimer")!;
     TIMER = new Timer({
@@ -170,10 +171,10 @@ function restart() {
     start();
 }
 
-function clicked(button: Game.Html.Button) {
+function clicked(button: Html.Button) {
     const value = button.getValue();
-    let message: Game.Message;
-    let ok: Game.Html.Button;
+    let message: GameMessage;
+    let ok: Html.Button;
 
     if (value === CURRENT_ITEM?.cost) {
         Message.correct();
@@ -187,7 +188,7 @@ function clicked(button: Game.Html.Button) {
             HighScore.add(TIMER.getTimeMilliseconds());
             updateHighScore();
 
-            ok = new Game.Html.Button({
+            ok = new Html.Button({
                 value: "Ok",
                 callback: function () {
                     message.clear();
@@ -195,7 +196,7 @@ function clicked(button: Game.Html.Button) {
                 },
             });
 
-            message = new Game.Message({
+            message = new GameMessage({
                 body: "Victory! " + TIMER.getTimeString(),
                 container: HTML_CONTAINER,
                 background: true,
@@ -210,7 +211,7 @@ function clicked(button: Game.Html.Button) {
         if (GUESSES_LEFT <= 0) {
             TIMER.stop();
 
-            ok = new Game.Html.Button({
+            ok = new Html.Button({
                 value: "Ok",
                 callback: function () {
                     message.clear();
@@ -218,7 +219,7 @@ function clicked(button: Game.Html.Button) {
                 },
             });
 
-            message = new Game.Message({
+            message = new GameMessage({
                 body: "Defeat!",
                 container: HTML_CONTAINER,
                 background: true,
@@ -232,7 +233,7 @@ function updateGuessesLeft(guesses: number) {
     GUESSES_LEFT = guesses;
     GUESSES_LEFT_ELEMENT.setValue(guesses);
 
-    const htmlElement = GUESSES_LEFT_ELEMENT.element;
+    const htmlElement = GUESSES_LEFT_ELEMENT.element!;
 
     if (guesses <= 1) {
         htmlElement.className = "red";
@@ -248,7 +249,7 @@ export function updateHighScore() {
     let str;
 
     if (bestTime > 0) {
-        str = Game.Utilities.timeToString(bestTime);
+        str = Utilities.timeToString({ time: bestTime });
     } else {
         str = "---";
     }
@@ -270,7 +271,7 @@ function formatAbility(attribute: ItemData["attrib"][number]) {
 }
 
 function newItem() {
-    const index = Game.Utilities.getRandomInt(0, ITEMS_LEFT.length - 1);
+    const index = Utilities.getRandomInt(0, ITEMS_LEFT.length - 1);
     const randomName = ITEMS_LEFT.splice(index, 1)[0];
 
     const item = ITEMS[randomName];
